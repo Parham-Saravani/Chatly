@@ -1,2 +1,40 @@
 @import "tailwindcss";
+
+@font-face {
+  font-family: "Inter";
+  src: url(../public/fonts/Inter_28pt-Regular.ttf);
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Inter";
+  src: url(../public/fonts/Inter_28pt-Medium.ttf);
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Inter";
+  src: url(../public/fonts/Inter_28pt-SemiBold.ttf);
+  font-weight: 600;
+}
+@font-face {
+  font-family: "Inter";
+  src: url(../public/fonts/Inter_18pt-Bold.ttf);
+  font-weight: 800;
+}
+@theme {
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #94a3b8;
+  --color-text-mute: #64748b;
+
+  --color-bg-primary: #060816;
+  --color-bg-secondary: #0d1224;
+  --color-bg-card: #111827;
+  --color-border: #1e293b;
+  --color-primary-accent: #7c4dff;
+  --color-hover-accent: #8b5cf6;
+  --color-active-accent: #6d28d9;
+  --color-success: #22c55e;
+  --color-danger: #ef4444;
+
+  --font-Inter: "Inter";
+}
 @custom-variant dark (&:where(.dark, .dark *));
