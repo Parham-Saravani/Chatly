@@ -27,7 +27,7 @@ function Chat({
         navigate(`/chat?chatID=${id}`, { state: "shot-chat-history" });
         setContextMenu({});
       }}
-      className="relative flex w-full items-center gap-3 rounded-xl p-3 text-left transition-colors hover:bg-white/5 cursor-pointer"
+      className="relative flex w-full items-center gap-3 rounded-xl p-3 text-left transition-colors duration-300 dark:hover:bg-dark-bg-secondary hover:bg-light-bg-secondary cursor-pointer"
     >
       <div className="relative shrink-0">
         <img
@@ -47,17 +47,21 @@ function Chat({
 
       <div className="min-w-0 flex-1">
         <div className="mb-1 flex items-center justify-between gap-2">
-          <h3 className="truncate text-sm font-semibold text-slate-100">
+          <h3 className="truncate text-sm font-semibold text-light-text-primary dark:text-dark-text-primary">
             {name}
           </h3>
 
-          <span className="shrink-0 text-xs text-slate-500">{time}</span>
+          <span className="shrink-0 text-xs text-light-text-secondary dark:text-dark-text-secondary">
+            {time}
+          </span>
         </div>
 
         <div className="flex items-center justify-between gap-2">
-          <p className="truncate text-xs text-slate-400">{lastMessage}</p>
+          <p className="truncate text-xs text-light-text-secondary dark:text-dark-text-secondary">
+            {lastMessage}
+          </p>
           <Activity mode={unreadCount !== 0 ? "visible" : "hidden"}>
-            <span className="flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-hover-accent px-1.5 text-[10px] font-medium text-white">
+            <span className="flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full dark:bg-dark-hover-accent bg-light-hover-accent px-1.5 text-[10px] font-medium text-white">
               {unreadCount}
             </span>
           </Activity>

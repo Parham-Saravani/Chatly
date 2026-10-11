@@ -9,7 +9,7 @@ import {
 
 function Home() {
   return (
-    <section className="relative flex min-h-full flex-1 items-center justify-center overflow-hidden bg-bg-primary px-5 py-10 sm:px-8">
+    <section className="relative flex min-h-full flex-1 items-center justify-center overflow-hidden dark:bg-dark-bg-primary bg-light-bg-primary px-5 py-10 sm:px-8">
       {/* Background Effects */}
       <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-primary-accent/[0.08] blur-[120px]" />
       <div className="pointer-events-none absolute -bottom-40 -left-32 h-96 w-96 rounded-full bg-purple-500/[0.06] blur-[120px]" />

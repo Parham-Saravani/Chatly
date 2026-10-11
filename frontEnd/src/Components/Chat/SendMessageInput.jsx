@@ -1,4 +1,6 @@
-import { FiPaperclip, FiSend, FiImage } from "react-icons/fi";
+import { FiPaperclip } from "react-icons/fi";
+import { IoSend } from "react-icons/io5";
+
 import Button from "../Button";
 import { Activity, useEffect, useState } from "react";
 function sendMessageInput(chatID) {
@@ -7,7 +9,7 @@ function sendMessageInput(chatID) {
     setMessage("");
   },[chatID]);
   return (
-    <div className="w-full flex items-center border-t border-border-primary bg-bg-card p-2 sm:gap-3 sm:p-3">
+    <div className="shadow-xl w-full flex items-center border-t dark:border-dark-border-primary border-light-border-primary dark:bg-dark-bg-card bg-light-bg-card p-2 sm:gap-3 sm:p-3">
       <div className="flex gap-1">
         <Button Icon={FiPaperclip} size={20} />
       </div>
@@ -29,9 +31,9 @@ function sendMessageInput(chatID) {
       />
       <Activity mode={message.length ? "visible" : "hidden"}>
         <button
-          className={`${message.length ? "animate-fadeIn" : ""} cursor-pointer flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-accent text-white shadow-lg shadow-primary-accent/20 transition-colors duration-300 hover:bg-hover-accent`}
+          className={`${message.length ? "animate-fadeIn" : ""} cursor-pointer flex h-10 w-10 shrink-0 items-center justify-center rounded-xl dark:bg-dark-primary-accent bg-light-primary-accent text-white shadow-lg shadow-primary-accent/20 transition-colors duration-300 dark:hover:bg-dark-hover-accent hover:bg-light-hover-accent`}
         >
-          <FiSend className="h-4 w-4" />
+          <IoSend size={17} />
         </button>
       </Activity>
     </div>
