@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+.custom-scroll {
+  scrollbar-width: none;
+  scrollbar-color: #393052 transparent;
+}
+
 @font-face {
   font-family: "Inter";
   src: url(../public/fonts/Inter_28pt-Regular.ttf);
@@ -28,7 +33,7 @@
   --color-bg-primary: #060816;
   --color-bg-secondary: #0d1224;
   --color-bg-card: #111827;
-  --color-border: #1e293b;
+  --color-border-primary: #1e293b;
   --color-primary-accent: #7c4dff;
   --color-hover-accent: #8b5cf6;
   --color-active-accent: #6d28d9;
