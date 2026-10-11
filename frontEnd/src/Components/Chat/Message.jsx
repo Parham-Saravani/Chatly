@@ -10,7 +10,7 @@ function Message({ id, text, time, isOwn, contextMenu, setContextMenu }) {
       onContextMenu={(event) =>
         setContextMenu({ id: id, left: event.clientX, top: event.clientY })
       }
-      className={`relative flex ${isOwn ? "items-end ml-auto" : "items-end"} gap-2 max-w-[75%]`}
+      className={`relative flex ${isOwn ? "items-end ml-auto" : "items-end"} gap-2 max-w-[75%] max-sm:max-w-[95%]`}
     >
       <div>
         <div

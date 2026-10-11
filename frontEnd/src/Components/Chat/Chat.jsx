@@ -1,5 +1,5 @@
 import { Activity, useState } from "react";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import ChatContextMenu from "./ChatContextMenu";
 function Chat({
   id,
@@ -24,7 +24,7 @@ function Chat({
         });
       }}
       onClick={() => {
-        navigate(`/chat?chatID=${id}`);
+        navigate(`/chat?chatID=${id}`, { state: "shot-chat-history" });
         setContextMenu({});
       }}
       className="relative flex w-full items-center gap-3 rounded-xl p-3 text-left transition-colors hover:bg-white/5 cursor-pointer"

@@ -1,28 +1,39 @@
-import { FiPaperclip, FiSmile, FiSend, FiImage } from "react-icons/fi";
-function sendMessageInput() {
+import { FiPaperclip, FiSend, FiImage } from "react-icons/fi";
+import Button from "../Button";
+import { Activity, useEffect, useState } from "react";
+function sendMessageInput(chatID) {
+  const [message, setMessage] = useState("");
+  useEffect(() => {
+    setMessage("");
+  },[chatID]);
   return (
-    <div className="mx-auto flex max-w-5xl items-end gap-2 rounded-2xl border border-border-primary bg-bg-card p-2 sm:gap-3 sm:p-3">
-      <button className="shrink-0 rounded-xl p-2 text-text-secondary transition hover:bg-bg-secondary hover:text-primary-accent">
-        <FiPaperclip className="h-5 w-5" />
-      </button>
-
-      <button className="hidden shrink-0 rounded-xl p-2 text-text-secondary transition hover:bg-bg-secondary hover:text-primary-accent sm:block">
-        <FiImage className="h-5 w-5" />
-      </button>
+    <div className="w-full flex items-center border-t border-border-primary bg-bg-card p-2 sm:gap-3 sm:p-3">
+      <div className="flex gap-1">
+        <Button Icon={FiPaperclip} size={20} />
+      </div>
 
       <textarea
+        onKeyDown={(event) => {
+          if (event.shiftKey && event.code === "Enter") {
+            return;
+          }
+          if (event.code === "Enter") {
+            event.preventDefault();
+          }
+        }}
+        value={message}
+        onChange={(event) => setMessage(event.target.value)}
         rows={1}
         placeholder="Write a message..."
         className="max-h-32 min-h-10 flex-1 resize-none bg-transparent px-2 py-2.5 text-sm text-text-primary outline-none placeholder:text-text-mute"
       />
-
-      <button className="shrink-0 rounded-xl p-2 text-text-secondary transition hover:bg-bg-secondary hover:text-primary-accent">
-        <FiSmile className="h-5 w-5" />
-      </button>
-
-      <button className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-accent text-white shadow-lg shadow-primary-accent/20 transition hover:bg-hover-accent">
-        <FiSend className="h-4 w-4" />
-      </button>
+      <Activity mode={message.length ? "visible" : "hidden"}>
+        <button
+          className={`${message.length ? "animate-fadeIn" : ""} cursor-pointer flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-accent text-white shadow-lg shadow-primary-accent/20 transition-colors duration-300 hover:bg-hover-accent`}
+        >
+          <FiSend className="h-4 w-4" />
+        </button>
+      </Activity>
     </div>
   );
 }

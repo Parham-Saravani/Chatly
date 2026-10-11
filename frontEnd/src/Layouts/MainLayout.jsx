@@ -1,13 +1,15 @@
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import Sidebar from "../Components/Sidebar";
 import { useEffect } from "react";
 
 function MainLayout() {
-  useEffect(() => {    
-    document.addEventListener('contextmenu', (event) => {
-      event.preventDefault()
-    })
-  }, [])
+  const data = useLocation();
+
+  useEffect(() => {
+    document.addEventListener("contextmenu", (event) => {
+      event.preventDefault();
+    });
+  }, []);
   return (
     <div className="flex h-full overflow-hidden">
       <title>Chatly - Real-Time Messaging</title>
@@ -18,7 +20,9 @@ function MainLayout() {
 
       <Sidebar />
 
-      <div className="flex w-full max-lg:hidden">
+      <div
+        className={`flex w-full h-full max-lg:fixed max-sm:-right-200 max-lg:transition-right max-lg:duration-300 ${data.state === "shot-chat-history" && "right-0! z-1000"}`}
+      >
         <Outlet />
       </div>
     </div>

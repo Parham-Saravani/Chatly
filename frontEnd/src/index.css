@@ -34,6 +34,14 @@
     opacity: 100;
   }
 }
+@keyframes fadeOut {
+  0% {
+    opacity: 100;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 @theme {
   --color-text-primary: #f8fafc;
   --color-text-secondary: #94a3b8;
@@ -52,5 +60,6 @@
   --font-Inter: "Inter";
 
   --animate-fadeIn: fadeIn 300ms ease-in;
+  --animate-fadeOut: fadeOut 300ms ease-in;
 }
 @custom-variant dark (&:where(.dark, .dark *));

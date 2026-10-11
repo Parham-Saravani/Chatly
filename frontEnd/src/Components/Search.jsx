@@ -2,7 +2,7 @@ import { FiSearch, FiX } from "react-icons/fi";
 
 function Search() {
   return (
-    <div className="relative w-full my-3">
+    <div className="relative w-full">
       <FiSearch
         size={20}
         className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
