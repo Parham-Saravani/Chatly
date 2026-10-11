@@ -3,7 +3,7 @@ import Sidebar from "../Components/Sidebar";
 import { useEffect } from "react";
 
 function MainLayout() {
-  const data = useLocation();
+  const {state} = useLocation();
 
   useEffect(() => {
     document.addEventListener("contextmenu", (event) => {
@@ -21,7 +21,7 @@ function MainLayout() {
       <Sidebar />
 
       <div
-        className={`flex w-full h-full max-lg:fixed max-sm:-right-200 max-lg:transition-right max-lg:duration-300 ${data.state === "shot-chat-history" && "right-0! z-1000"}`}
+        className={`flex w-full h-full max-lg:fixed max-sm:-right-200 max-lg:transition-right max-lg:duration-300 ${state === "shot-chat-history" && "right-0! z-1000"}`}
       >
         <Outlet />
       </div>
