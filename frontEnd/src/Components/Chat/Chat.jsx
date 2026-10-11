@@ -19,8 +19,8 @@ function Chat({
       onContextMenu={(event) => {
         setContextMenu({
           id: id,
-          left: event.clientX,
-          top: event.clientY,
+          left: event.pageX,
+          top: event.pagey,
         });
       }}
       onClick={() => {
@@ -67,7 +67,7 @@ function Chat({
           </Activity>
         </div>
       </div>
-      <Activity mode={contextMenu.id === id ? "visible" : "hidden"}>
+      <Activity mode={contextMenu === id ? "visible" : "hidden"}>
         <ChatContextMenu contextMenu={contextMenu} />
       </Activity>
     </div>

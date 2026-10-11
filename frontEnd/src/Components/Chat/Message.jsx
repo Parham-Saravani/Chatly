@@ -7,9 +7,15 @@ import { Activity } from "react";
 function Message({ id, text, time, isOwn, contextMenu, setContextMenu }) {
   return (
     <div
-      onContextMenu={(event) =>
-        setContextMenu({ id: id, left: event.clientX, top: event.clientY })
-      }
+      onContextMenu={(event) => {
+        console.log(`Position : `, event.clientX, event.clientY);
+
+        setContextMenu({
+          id: id,
+          left: event.clientX,
+          top: event.clientY <= 300 ? event.clientY + 200 : event.clientY,
+        });
+      }}
       className={`relative flex ${isOwn ? "items-end ml-auto" : "items-end"} gap-2 max-w-[75%] max-sm:max-w-[95%]`}
     >
       <div>
@@ -32,7 +38,7 @@ function Message({ id, text, time, isOwn, contextMenu, setContextMenu }) {
         </div>
       </div>
       <Activity mode={contextMenu.id === id ? "visible" : "hidden"}>
-        <MessageContextMenu left={contextMenu.left} top={contextMenu.top} />
+        <MessageContextMenu {...contextMenu} />
       </Activity>
     </div>
   );

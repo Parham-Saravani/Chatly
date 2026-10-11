@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router";
 import { messages } from "../data";
 import Message from "../Components/Chat/Message";
 import SendMessageInput from "../Components/Chat/SendMessageInput";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../Components/Button";
 
 function ChatPage() {
@@ -11,9 +11,20 @@ function ChatPage() {
   const [searchParams] = useSearchParams();
   const [contextMenu, setContextMenu] = useState({});
   const chatID = messages[searchParams.get("chatID")];
+  const clearContextMenu = () => {
+    setContextMenu({});
+  };
+
+  useEffect(() => {
+    clearContextMenu();
+  }, [chatID]);
+
   if (chatID) {
     return (
-      <section className="flex h-full min-h-0 flex-1 flex-col overflow-hidden dark:bg-dark-bg-primary bg-light-bg-primary">
+      <section
+        onClick={clearContextMenu}
+        className="flex h-full min-h-0 flex-1 flex-col overflow-hidden dark:bg-dark-bg-primary bg-light-bg-primary"
+      >
         <header
           onClick={(event) => console.log("fasdfa")}
           className="cursor-pointer shadow-xl flex items-center justify-between border-b border-light-border-primary dark:border-dark-border-primary dark:bg-dark-bg-card bg-light-bg-card py-3 px-6 max-xl:px-2 max-sm:px-1"
@@ -48,7 +59,10 @@ function ChatPage() {
           </div>
         </header>
 
-        <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-4 py-6 sm:px-6 custom-scroll">
+        <div
+          onScroll={clearContextMenu}
+          className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-4 py-6 sm:px-6 custom-scroll"
+        >
           {chatID.map((item) => (
             <Message
               setContextMenu={setContextMenu}

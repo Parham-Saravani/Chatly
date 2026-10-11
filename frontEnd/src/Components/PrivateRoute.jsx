@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { Navigate, Outlet } from "react-router";
+import {AuthContext} from "../Context/AuthContext";
 
 function PrivateRoute() {
-  if (true) {
+  const { userData, dispatch } = useContext(AuthContext);
+  if (Object.keys(userData).length) {
     return <Outlet />;
   }
 

@@ -9,7 +9,7 @@ function Sidebar() {
   const [contextMenu, setContextMenu] = useState({});
 
   return (
-    <div className="h-full bg-light-bg-card dark:bg-dark-bg-card w-160 max-lg:w-full overflow-y-hidden border-r border-r-light-border-primary dark:border-r-dark-border-primary px-1.5 py-4 shadow-xl">
+    <div className="h-full bg-light-bg-card dark:bg-dark-bg-card w-200 max-lg:w-full overflow-y-hidden border-r border-r-light-border-primary dark:border-r-dark-border-primary px-1.5 py-4 shadow-xl">
       <div className="px-2 gap-4 flex items-center justify-between mb-2">
        <Button Icon={IoMenu} size={27}/>
         <Search />
