@@ -25,6 +25,15 @@
   src: url(../public/fonts/Inter_18pt-Bold.ttf);
   font-weight: 800;
 }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 100;
+  }
+}
 @theme {
   --color-text-primary: #f8fafc;
   --color-text-secondary: #94a3b8;
@@ -41,5 +50,7 @@
   --color-danger: #ef4444;
 
   --font-Inter: "Inter";
+
+  --animate-fadeIn: fadeIn 300ms ease-in;
 }
 @custom-variant dark (&:where(.dark, .dark *));

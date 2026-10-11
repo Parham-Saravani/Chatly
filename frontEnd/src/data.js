@@ -1,35 +1,104 @@
 export const messages = {
   "chat-1": [
     {
-      id: "m1",
+      id: "m1540",
+      sender: "Michael",
+      text: "The new update is ready 🚀",
+      time: "11:58",
+      isOwn: false,
+    },
+    {
+      id: "m14432141",
+      sender: "Emily",
+      text: "Awesome! Did you fix the authentication bug?",
+      time: "12:00",
+      isOwn: false,
+    },
+    {
+      id: "m414512",
+      sender: "Michael",
+      text: "Yes, and I improved the loading performance too.",
+      time: "12:02",
+      isOwn: false,
+    },
+    {
+      id: "m1413413",
+      sender: "You",
+      text: "Great work! I'll test it this afternoon.",
+      time: "12:03",
+      isOwn: true,
+    },
+    {
+      id: "m41234114",
+      sender: "Michael",
+      text: "The new update is ready 🚀",
+      time: "12:05",
+      isOwn: false,
+    },
+    {
+      id: "m1443214",
       sender: "Alex Carter",
       text: "Hey! How are you doing? 👋",
       time: "12:30",
       isOwn: false,
     },
     {
-      id: "m2",
+      id: "m143214",
+      sender: "Alex Carter",
+      text: "Hey! How are you doing? 👋",
+      time: "12:30",
+      isOwn: false,
+    },
+    {
+      id: "m432142",
       sender: "You",
-      text: "I'm good, thanks! How about you?",
+      text: `Ive been testing the new messaging interface and found a few things we should improve.
+First, the message bubbles need to handle long text correctly.
+Second, the conversation container should scroll independently.
+Third, the sidebar should keep its own scroll position.
+Fourth, we need to make sure long messages don't overflow.
+Fifth, the layout should work on smaller screens too.
+Sixth, timestamps should remain aligned with each message.
+Seventh, unread message badges should stay visible.
+Eighth, context menus should appear near the clicked item.
+Ninth, opening a new chat should reset the appropriate UI state.
+Finally, we should test everything with a large number of messages.`,
       time: "12:31",
       isOwn: true,
     },
     {
-      id: "m3",
+      id: "m232",
+      sender: "You",
+      text: `Ive been testing the new messaging interface and found a few things we should improve.
+First, the message bubbles need to handle long text correctly.
+Second, the conversation container should scroll independently.
+Third, the sidebar should keep its own scroll position.
+Fourth, we need to make sure long messages don't overflow.
+Fifth, the layout should work on smaller screens too.
+Sixth, timestamps should remain aligned with each message.
+Seventh, unread message badges should stay visible.
+Eighth, context menus should appear near the clicked item.
+Ninth, opening a new chat should reset the appropriate UI state.
+Finally, we should test everything with a large number of messages.`,
+      time: "12:31",
+      isOwn: false,
+    },
+    {
+      id: "m43123",
       sender: "Alex Carter",
       text: "Doing great! Just finished working on a new project.",
       time: "12:32",
       isOwn: false,
     },
     {
-      id: "m4",
+      id: "m44234",
       sender: "You",
       text: "Nice! What are you building?",
       time: "12:33",
       isOwn: true,
     },
     {
-      id: "m5",
+      id: "m541324",
       sender: "Alex Carter",
       text: "Hey! How are you doing? 👋",
       time: "12:34",
@@ -64,6 +133,41 @@ export const messages = {
       sender: "Sarah Wilson",
       text: "Perfect, see you tomorrow!",
       time: "12:20",
+      isOwn: false,
+    },
+    {
+      id: "m10",
+      sender: "Michael",
+      text: "The new update is ready 🚀",
+      time: "11:58",
+      isOwn: false,
+    },
+    {
+      id: "m11",
+      sender: "Emily",
+      text: "Awesome! Did you fix the authentication bug?",
+      time: "12:00",
+      isOwn: false,
+    },
+    {
+      id: "m12",
+      sender: "Michael",
+      text: "Yes, and I improved the loading performance too.",
+      time: "12:02",
+      isOwn: false,
+    },
+    {
+      id: "m13",
+      sender: "You",
+      text: "Great work! I'll test it this afternoon.",
+      time: "12:03",
+      isOwn: true,
+    },
+    {
+      id: "m14",
+      sender: "Michael",
+      text: "The new update is ready 🚀",
+      time: "12:05",
       isOwn: false,
     },
   ],

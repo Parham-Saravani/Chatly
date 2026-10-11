@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router";
 import PrivateRoute from "./Components/PrivateRoute";
 import Home from "./Pages/Home";
 import ChatPage from "./Pages/ChatPage";
-import Authentication from "./Pages/Authentication";
+import Auth from "./Pages/Auth";
 import MainLayout from "./Layouts/MainLayout";
 const router = createBrowserRouter([
   {
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/auth",
-    element: <Authentication />,
+    element: <Auth />,
   },
 ]);
 
