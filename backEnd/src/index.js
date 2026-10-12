@@ -4,9 +4,11 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const PORT = process.env.PORT;
+
 (async () => {
   connectToDatabase();
-  app.listen(process.env.PORT, () => {
+  app.listen(PORT, () => {
     console.log("Server is Running on port :", process.env.PORT);
   });
 })();

@@ -42,6 +42,41 @@
     opacity: 0;
   }
 }
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 15px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  animation: l5 1s infinite linear alternate;
+}
+@keyframes loader {
+  0% {
+    box-shadow:
+      20px 0 rgba(121 77 255 / 0.5),
+      -20px 0 #8b5cf6;
+    background: rgba(121 77 255 / 0.5);
+  }
+  33% {
+    box-shadow:
+      20px 0 rgba(121 77 255 / 0.5),
+      -20px 0 #8b5cf6;
+    background: #8b5cf6;
+  }
+  66% {
+    box-shadow:
+      20px 0 #8b5cf6,
+      -20px 0 rgba(121 77 255 / 0.5);
+    background: #8b5cf6;
+  }
+  100% {
+    box-shadow:
+      20px 0 #8b5cf6,
+      -20px 0 rgba(121 77 255 / 0.5);
+    background: rgba(121 77 255 / 0.5);
+  }
+}
+
 @theme {
   /* Dark Theme */
   --color-dark-text-primary: #f8fafc;
@@ -79,5 +114,6 @@
 
   --animate-fadeIn: fadeIn 300ms ease-in;
   --animate-fadeOut: fadeOut 300ms ease-in;
+  --animate-loader: loader 1s infinite linear alternate;
 }
 @custom-variant dark (&:where(.dark, .dark *));
