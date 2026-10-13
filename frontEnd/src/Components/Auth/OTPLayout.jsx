@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import AuthLayout from "../AuthLayout";
+import AuthLayout from "./AuthLayout";
 import { FiArrowRight } from "react-icons/fi";
 import requestEmail from "../../utilities/requestEmail";
 import OTPInputs from "./OTPInputs";
@@ -71,51 +71,54 @@ function OTPLayout({ email, setStep, setEmail }) {
     return `${String(minute).padStart(2, "0")}:${String(second).padStart(2, "0")}`;
   };
   return (
-    <AuthLayout
-      header={OTPHeader}
-      footer={OTPFooter}
-      email={email}
-      setEmail={setEmail}
-      setStep={setStep}
-    >
-      <form
-        action={() => {
-          codeVerifierHandler(code, email, setResetInputs, setStep);
-        }}
-        className="space-y-5"
+    <>
+      <title>Verify Code | Chatly</title>
+      <AuthLayout
+        header={OTPHeader}
+        footer={OTPFooter}
+        email={email}
+        setEmail={setEmail}
+        setStep={setStep}
       >
-        <OTPInputs
-          setResetInputs={setResetInputs}
-          resetInputs={resetInputs}
-          setCode={setCode}
-        />
+        <form
+          action={() => {
+            codeVerifierHandler(code, email, setResetInputs, setStep);
+          }}
+          className="space-y-5"
+        >
+          <OTPInputs
+            setResetInputs={setResetInputs}
+            resetInputs={resetInputs}
+            setCode={setCode}
+          />
 
-        <AuthBtutton condition={code.length === 6}>
-          Verify
-          <FiArrowRight className="size-4" />
-        </AuthBtutton>
+          <AuthBtutton condition={code.length === 6}>
+            Verify
+            <FiArrowRight className="size-4" />
+          </AuthBtutton>
 
-        {timer === 0 ? (
-          <span
-            onClick={() => {
-              setTimer(60);
-              setIsRunning(true);
-              requestEmail(email);
-            }}
-            className="text-center block text-sm mt-7 dark:text-dark-primary-accent text-light-primary-accent transition-colors duration-300 dark:hover:text-dark-primary-accent/80 hover:text-light-primary-accent/80 cursor-pointer"
-          >
-            Resend code
-          </span>
-        ) : (
-          <p className="mt-7 text-center text-sm dark:text-dark-text-mute text-dark-text-mute">
-            You can request a new code in{" "}
-            <span className="mx-0.5 dark:text-dark-text-primary/80 text-light-text-primary/80">
-              {calculateTimer()}
+          {timer === 0 ? (
+            <span
+              onClick={() => {
+                setTimer(60);
+                setIsRunning(true);
+                requestEmail(email);
+              }}
+              className="text-center block text-sm mt-7 dark:text-dark-primary-accent text-light-primary-accent transition-colors duration-300 dark:hover:text-dark-primary-accent/80 hover:text-light-primary-accent/80 cursor-pointer"
+            >
+              Resend code
             </span>
-          </p>
-        )}
-      </form>
-    </AuthLayout>
+          ) : (
+            <p className="mt-7 text-center text-sm dark:text-dark-text-mute text-dark-text-mute">
+              You can request a new code in{" "}
+              <span className="mx-0.5 dark:text-dark-text-primary/80 text-light-text-primary/80">
+                {calculateTimer()}
+              </span>
+            </p>
+          )}
+        </form>
+      </AuthLayout>
+    </>
   );
 }
 

@@ -76,7 +76,7 @@ function OTPInputs({ setCode, resetInputs, setResetInputs }) {
               onInputHandler(event);
             }}
             ref={(element) => (inputs.current[index] = element)}
-            className="border dark:border-dark-border-primary text-center border-light-border-primary transition-colors duration-300 dark:focus:border-dark-primary-accent focus:border-light-primary-accent outline-hidden w-14 h-14 rounded-xl disabled:dark:bg-dark-bg-secondary disabled:bg-light-bg-secondary disabled:cursor-default"
+            className=" border dark:border-dark-border-primary text-center border-light-border-primary transition-colors duration-300 dark:focus:border-dark-primary-accent focus:border-light-primary-accent outline-hidden w-14 h-14 rounded-xl disabled:dark:bg-dark-bg-secondary/10 disabled:bg-light-bg-secondary/10 disabled:cursor-default"
             type="text"
             inputMode="numeric"
           />
