@@ -96,11 +96,11 @@ const sendCodeHandler = async (req, res) => {
             hashedCode,
             expiresAt: time,
           });
-          // await sendEmail({
-          //   to: email,
-          //   subject: "Email Verification",
-          //   html: htmlElements,
-          // });
+          await sendEmail({
+            to: email,
+            subject: "Email Verification",
+            html: htmlElements,
+          });
           res.json({ message: "EMAIL_SENT" });
         } else {
           res.json({ message: "TRY_ONE_MINUTE_LATER" });
@@ -111,11 +111,11 @@ const sendCodeHandler = async (req, res) => {
           hashedCode,
           expiresAt: time,
         });
-        // await sendEmail({
-        //   to: email,
-        //   subject: "Email Verification",
-        //   html: htmlElements,
-        // });
+        await sendEmail({
+          to: email,
+          subject: "Email Verification",
+          html: htmlElements,
+        });
         res.json({ message: "EMAIL_SENT" });
         res.json({ message: error.message });
       }
@@ -140,7 +140,7 @@ const codeVerifierHandler = async (req, res) => {
               currentEmailOTP.hashedCode,
             );
             if (isCodeSame) {
-              res.json("VERIFIED");
+              res.json({ message: "VERIFIED" });
             } else {
               return res.json({ message: "CODE_NOT_MATCH" });
             }

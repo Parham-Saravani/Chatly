@@ -3,10 +3,16 @@ import { flushSync } from "react-dom";
 
 function OTPInputs({ setCode, resetInputs, setResetInputs }) {
   const [currentInput, setCurrentInput] = useState(0);
+  const [isPasted, setIsPasted] = useState(false);
   const inputs = useRef([]);
 
   useEffect(() => {
-    inputs.current.forEach((item) => (item.value = ""));
+    inputs.current.forEach((item, index) => {
+      if (index) {
+        item.disabled = true;
+      }
+      item.value = "";
+    });
     setCurrentInput(0);
     inputs.current[0].focus();
     setCode("");
@@ -28,8 +34,17 @@ function OTPInputs({ setCode, resetInputs, setResetInputs }) {
     }
   };
   const onPasteHandler = (event) => {
-    console.log(event);
-    
+    event.preventDefault();
+    const value = event.clipboardData.getData("text");
+    if (/^\d{6}$/.test(value)) {
+      inputs.current.forEach((item, index) => {
+        item.value = value[index];
+        item.disabled = false;
+      });
+      setIsPasted(true);
+      setCurrentInput(inputs.current.length - 1);
+      inputs.current[inputs.current.length - 1].focus();
+    }
   };
 
   return (
@@ -39,22 +54,21 @@ function OTPInputs({ setCode, resetInputs, setResetInputs }) {
           <input
             maxLength={1}
             key={index}
-            disabled={index !== currentInput}
+            disabled={!isPasted && index !== currentInput}
             onPaste={(event) => {
               onPasteHandler(event);
             }}
             onKeyDown={(event) => {
               if (event.key === "Backspace" && !event.target.value) {
-                event.target.value = "";
                 flushSync(() =>
                   setCurrentInput((prev) => {
                     if (prev === 0) return 0;
                     return prev - 1;
                   }),
                 );
-                inputs.current[currentInput - 1]?.focus();
+                inputs.current[currentInput]?.focus();
               }
-              if (event.key === "Backspace") {
+              if (event.key === "Backspace" && event.target.value) {
                 setCode((prev) => prev.slice(0, index));
               }
             }}

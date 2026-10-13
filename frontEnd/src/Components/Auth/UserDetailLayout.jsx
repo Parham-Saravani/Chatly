@@ -1,5 +1,15 @@
+import AuthLayout from "../AuthLayout";
+
 function UserDetailLayout() {
-  return <div>UserDetailLayout</div>;
+  <AuthLayout
+    header={OTPHeader}
+    footer={OTPFooter}
+    email={email}
+    setEmail={setEmail}
+    setStep={setStep}
+  >
+    <form></form>
+  </AuthLayout>;
 }
 
 export default UserDetailLayout;
