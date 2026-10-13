@@ -12,13 +12,13 @@ function Auth() {
       email={email}
       setEmail={setEmail}
     />
-  ) : (
+  ) : step === 'otp' ? (
     <OTPLayout
       setEmail={setEmail}
       email={email}
       setStep={setStep}
     />
-  );
+  ): <UserDetailLayout/>;
 }
 
 export default Auth;

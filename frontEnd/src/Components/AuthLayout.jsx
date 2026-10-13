@@ -3,7 +3,14 @@ import lightIcon from "/Images/Light-Icon.png";
 import { useContext } from "react";
 import { ThemeContext } from "../Context/ThemeContext";
 
-function AuthLayout({ children, title, description, footer }) {
+function AuthLayout({
+  children,
+  header: Header,
+  footer: Footer,
+  email,
+  setEmail,
+  setStep,
+}) {
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -17,18 +24,14 @@ function AuthLayout({ children, title, description, footer }) {
             alt="Chatly logo"
           />
 
-          <h1 className="text-3xl font-bold tracking-tight dark:text-dark-text-primary text-light-text-primary">
-            {title}
-          </h1>
-
           <div className="mt-3 text-sm leading-6 dark:text-dark-text-secondary text-light-text-secondary">
-            {description}
+            {<Header email={email} />}
           </div>
         </div>
 
         {children}
         <div className="mt-8 flex items-center justify-center text-center text-xs leading-5 dark:text-dark-text-mute text-light-text-mute">
-          {footer}
+          {<Footer setEmail={setEmail} setStep={setStep} />}
         </div>
       </div>
     </div>

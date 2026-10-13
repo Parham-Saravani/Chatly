@@ -1,14 +1,56 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AuthLayout from "../AuthLayout";
 import { FiArrowRight } from "react-icons/fi";
-import { GoArrowLeft } from "react-icons/go";
 import requestEmail from "../../utilities/requestEmail";
+import OTPInputs from "./OTPInputs";
+import toast from "react-hot-toast";
+import { baseUrl } from "../../utilities/constants";
+import AuthBtutton from "./AuthBtutton";
+import OTPFooter from "./elements/OTPFooter";
+import OTPHeader from "./elements/OTPHeader";
+
+const messages = {
+  CODE_NOT_MATCH: "The verification code is incorrect.",
+  TIME_PASSED: "The verification code has expired. Please request a new one.",
+  OTP_NOT_FOUND: "No verification code found. Please request a new one.",
+  NOT_VALID_CODE: "Please enter a valid 6-digit verification code.",
+  EMAIL_NOT_VALID: "Please enter a valid email address.",
+  INTERNAL_SERVER_ERROR: "Something went wrong. Please try again later.",
+};
+
+const codeVerifierHandler = async (code, email, setResetInputs, setStep) => {
+  try {
+    const response = await fetch(`${baseUrl}/api/user/verify-code`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ code, email }),
+    });
+    if (!response.ok) {
+      toast.error("We got Error");
+      return;
+    }
+    const data = await response.json();
+    if (data.message === "VERIFIED") {
+      setStep("detail");
+    } else {
+      toast.error(messages[data.message]);
+      setResetInputs(true);
+    }
+  } catch (error) {}
+};
 
 function OTPLayout({ email, setStep, setEmail }) {
-  const [timer, setTimer] = useState(60);
-  const [isRunning, setIsRunning] = useState(true);
+  const [code, setCode] = useState("");
+  const [timer, setTimer] = useState(0);
+  const [resetInputs, setResetInputs] = useState(false);
+  const [isRunning, setIsRunning] = useState(false);
+
   useEffect(() => {
     if (!isRunning) return;
+    setResetInputs(true);
+    setCode("");
     const timerInterval = setInterval(() => {
       setTimer((prev) => {
         if (!prev) {
@@ -21,7 +63,7 @@ function OTPLayout({ email, setStep, setEmail }) {
     }, 1000);
 
     return () => clearInterval(timerInterval);
-  }, [isRunning === true]);
+  }, [isRunning]);
 
   const calculateTimer = () => {
     const minute = Math.floor(timer / 60);
@@ -30,80 +72,28 @@ function OTPLayout({ email, setStep, setEmail }) {
   };
   return (
     <AuthLayout
-      title="Check your email"
-      description={
-        <>
-          <p>We've sent a 6-digit verification code</p>
-          <span className="dark:text-dark-text-primary text-light-text-primary">
-            {email}
-          </span>
-        </>
-      }
-      footer={
-        <button
-          onClick={() => {
-            setEmail("");
-            setStep("auth");
-          }}
-          className="border-t dark:border-dark-border-primary border-light-border-primary pt-5 w-90"
-        >
-          <p className="flex items-center gap-1.5 cursor-pointer mx-auto w-30 dark:text-dark-text-secondary text-light-text-secondary dark:hover:text-dark-text-secondary/80 hover:text-light-text-secondary/80 transition-colors duration-300">
-            <GoArrowLeft size={17} />
-            <span>Back to sign in</span>
-          </p>
-        </button>
-      }
+      header={OTPHeader}
+      footer={OTPFooter}
+      email={email}
+      setEmail={setEmail}
+      setStep={setStep}
     >
-      <form className="space-y-5">
-        <div className="flex w-100 items-center justify-center gap-2">
-          <input
-            className="border dark:border-dark-border-primary text-center border-light-border-primary transition-colors duration-300 dark:focus:border-dark-primary-accent focus:border-light-primary-accent outline-hidden w-14 h-14 rounded-xl"
-            type="text"
-            inputMode="numeric"
-          />
-          <input
-            disabled={true}
-            className="border dark:border-dark-border-primary text-center border-light-border-primary transition-colors duration-300 dark:focus:border-dark-primary-accent focus:border-light-primary-accent outline-hidden w-14 h-14 rounded-xl disabled:dark:bg-dark-bg-secondary disabled:bg-light-bg-secondary disabled:cursor-default"
-            type="text"
-            inputMode="numeric"
-          />
-          <input
-            disabled={true}
-            className="border dark:border-dark-border-primary text-center border-light-border-primary transition-colors duration-300 dark:focus:border-dark-primary-accent focus:border-light-primary-accent outline-hidden w-14 h-14 rounded-xl disabled:dark:bg-dark-bg-secondary disabled:bg-light-bg-secondary disabled:cursor-default"
-            type="text"
-            inputMode="numeric"
-          />
-          <input
-            disabled={true}
-            className="border dark:border-dark-border-primary text-center border-light-border-primary transition-colors duration-300 dark:focus:border-dark-primary-accent focus:border-light-primary-accent outline-hidden w-14 h-14 rounded-xl disabled:dark:bg-dark-bg-secondary disabled:bg-light-bg-secondary disabled:cursor-default"
-            type="text"
-            inputMode="numeric"
-          />
-          <input
-            disabled={true}
-            className="border dark:border-dark-border-primary text-center border-light-border-primary transition-colors duration-300 dark:focus:border-dark-primary-accent focus:border-light-primary-accent outline-hidden w-14 h-14 rounded-xl disabled:dark:bg-dark-bg-secondary disabled:bg-light-bg-secondary disabled:cursor-default"
-            type="text"
-            inputMode="numeric"
-          />
-          <input
-            disabled={true}
-            className="border dark:border-dark-border-primary text-center border-light-border-primary transition-colors duration-300 dark:focus:border-dark-primary-accent focus:border-light-primary-accent outline-hidden w-14 h-14 rounded-xl disabled:dark:bg-dark-bg-secondary disabled:bg-light-bg-secondary disabled:cursor-default"
-            type="text"
-            inputMode="numeric"
-          />
-        </div>
+      <form
+        action={() => {
+          codeVerifierHandler(code, email, setResetInputs, setStep);
+        }}
+        className="space-y-5"
+      >
+        <OTPInputs
+          setResetInputs={setResetInputs}
+          resetInputs={resetInputs}
+          setCode={setCode}
+        />
 
-        <button
-          onClick={async (event) => {
-            event.preventDefault();
-            sendEmailHandler(email);
-          }}
-          type="submit"
-          className="flex w-full items-center justify-center gap-2 rounded-xl dark:bg-dark-primary-accent bg-light-primary-accent py-3.5 font-medium text-dark-text-primary transition-colors duration-300 dark:hover:bg-dark-hover-accent hover:bg-light-hover-accent cursor-pointer dark:disabled:bg-dark-primary-accent/50 disabled:cursor-default disabled:bg-light-primary-accent/50"
-        >
+        <AuthBtutton condition={code.length === 6}>
           Verify
           <FiArrowRight className="size-4" />
-        </button>
+        </AuthBtutton>
 
         {timer === 0 ? (
           <span

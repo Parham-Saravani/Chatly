@@ -1,10 +1,18 @@
 import { useRef, useState } from "react";
 import AuthLayout from "../AuthLayout";
-import { FiMail } from "react-icons/fi";
+import { FiArrowRight, FiMail } from "react-icons/fi";
 import AuthBtutton from "./AuthBtutton";
 import requestEmail from "../../utilities/requestEmail";
-
+import toast from "react-hot-toast";
+import EmailVerificationFooter from "./elements/EmailVerificationFooter";
+import EmailVerificationHeader from "./elements/EmailVerificationHeader";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+const messages = {
+  TRY_ONE_MINUTE_LATER:
+    "Please wait one minute before requesting another code.",
+  EMAIL_NOT_VALID: "Please enter a valid email address.",
+};
 
 function EmailVerificationLayout({ email, setEmail, setStep }) {
   const [isEmailValid, setIsEmailValid] = useState(false);
@@ -12,21 +20,17 @@ function EmailVerificationLayout({ email, setEmail, setStep }) {
 
   return (
     <AuthLayout
-      title="Welcome back to Chatly"
-      description={<p>Enter your email to get started.</p>}
-      footer={
-        <p>
-          By continuing, you agree to Chatly's Terms of Service and Privacy
-          Policy.
-        </p>
-      }
+      header={EmailVerificationHeader}
+      footer={EmailVerificationFooter}
     >
       <form
         action={async () => {
           const emailStatus = await requestEmail(email);
           if (emailStatus.message === "EMAIL_SENT") {
             setStep("otp");
+            return;
           }
+          toast.error(messages[emailStatus.message]);
         }}
         className="space-y-5"
       >
@@ -66,7 +70,10 @@ function EmailVerificationLayout({ email, setEmail, setStep }) {
           </p>
         </div>
 
-        <AuthBtutton isEmailValid={isEmailValid} />
+        <AuthBtutton condition={isEmailValid}>
+          Continue
+          <FiArrowRight className="size-4" />
+        </AuthBtutton>
       </form>
     </AuthLayout>
   );
