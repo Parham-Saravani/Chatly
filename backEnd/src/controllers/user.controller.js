@@ -1,6 +1,7 @@
 import EmailOTP from "../models/EmailOTP.model.js";
 import sendEmail from "../utilities/sendEmail.js";
 import bcrypt from "bcrypt";
+import User from "../models/user.model.js";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const hashRounds = 10;
@@ -162,4 +163,29 @@ const codeVerifierHandler = async (req, res) => {
   }
 };
 
-export { sendCodeHandler, codeVerifierHandler };
+const checkIsUserIDAvailable = async (req, res) => {
+  const { id } = req.body;
+  try {
+    if (id) {
+      if (typeof id === "string") {
+        if (id.length < 3) {
+          const isIDTaken = await User.findOne({ id });
+          if (isIDTaken) {
+            res.json({ message: "ID_TAKEN" });
+          } else {
+            res.json({ message: "ID_NOT_TAKEN" });
+          }
+        } else {
+          res.json({ message: "ID_MUST_BE_AT_LEAST_THREE_CHARACTERS" });
+        }
+      } else {
+        res.json({ message: "ID_MUST_BE_STRING" });
+      }
+    } else {
+      res.json({ message: "INVALID_ID" });
+    }
+  } catch (error) {
+    res.json({ message: "INTERNAL_SERVER_ERROR" });
+  }
+};
+export { sendCodeHandler, codeVerifierHandler, checkIsUserIDAvailable };
