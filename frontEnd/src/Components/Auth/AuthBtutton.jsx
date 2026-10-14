@@ -1,8 +1,6 @@
 import { useFormStatus } from "react-dom";
 
 function AuthBtutton({ condition, children }) {
-  console.log(condition);
-
   const { pending } = useFormStatus();
   return (
     <button

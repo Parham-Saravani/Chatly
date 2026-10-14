@@ -5,7 +5,7 @@ import UserDetailLayout from "../Components/Auth/UserDetailLayout";
 import { Navigate } from "react-router";
 
 function Auth() {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState("parhamsaravani83@gmail.com");
   const [step, setStep] = useState("detail");
 
   return step === "auth" ? (

@@ -4,7 +4,45 @@ import bcrypt from "bcrypt";
 import User from "../models/user.model.js";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const userNameRegex = /^[a-zA-Z0-9-]+$/;
+
 const hashRounds = 10;
+
+const registerNewUser = async (req, res) => {
+  const { email, username, name, imageUrl, bio } = req.body;
+  try {
+    if (
+      emailRegex.test(email) &&
+      Boolean(name) &&
+      !userNameRegex.test(userNameRegex)
+    ) {
+      const isEmailAlradyUsed = await User.findOne({ email });
+      const chechIsUsernameTaken = await User.findOne({ id: username });
+      if (isEmailAlradyUsed) {
+        return res.json({ message: "EMAIL_IS_TAKEN" });
+      } else if (chechIsUsernameTaken) {
+        return res.json({ message: "USERNAME_IS_TAKEN" });
+      }
+      const userData = await User.create({
+        name,
+        id: username,
+        email,
+        ...(imageUrl && { imageUrl }),
+        ...(bio && { bio }),
+      });
+      res.status(201).json({
+        message: "Your account has been created successfully.",
+        userData,
+      });
+    } else {
+      res.json({ message: "EMAIL_OR_USERNAME_OR_NAME_WRONG_FORMAT" });
+    }
+  } catch (error) {
+    console.log(error);
+
+    res.json({ message: "INTERNAL_SERVER_ERROR" });
+  }
+};
 
 const sendCodeHandler = async (req, res) => {
   const { email } = req.body;
@@ -118,10 +156,9 @@ const sendCodeHandler = async (req, res) => {
           html: htmlElements,
         });
         res.json({ message: "EMAIL_SENT" });
-        res.json({ message: error.message });
       }
     } catch (error) {
-      res.json({ message: error.message });
+      res.json({ message: "INTERNAL_SERVER_ERROR" });
     }
   } else {
     res.json({ message: "EMAIL_NOT_VALID" });
@@ -168,7 +205,7 @@ const checkIsUserIDAvailable = async (req, res) => {
   try {
     if (id) {
       if (typeof id === "string") {
-        if (id.length < 3) {
+        if (id.length > 3) {
           const isIDTaken = await User.findOne({ id });
           if (isIDTaken) {
             res.json({ message: "ID_TAKEN" });
@@ -188,4 +225,10 @@ const checkIsUserIDAvailable = async (req, res) => {
     res.json({ message: "INTERNAL_SERVER_ERROR" });
   }
 };
-export { sendCodeHandler, codeVerifierHandler, checkIsUserIDAvailable };
+
+export {
+  sendCodeHandler,
+  codeVerifierHandler,
+  checkIsUserIDAvailable,
+  registerNewUser,
+};

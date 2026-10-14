@@ -5,21 +5,59 @@ import { FiUpload } from "react-icons/fi";
 import { FaRegTrashCan, FaRegUser } from "react-icons/fa6";
 import { FaAt, FaAlignLeft } from "react-icons/fa";
 import AuthButton from "./AuthBtutton";
+import { baseUrl } from "../../utilities/constants";
+import toast from "react-hot-toast";
+import uploadImage from "../../utilities/uploadImage";
+
+const errors = {
+  ID_TAKEN: "This username is already taken.",
+  ID_MUST_BE_AT_LEAST_THREE_CHARACTERS:
+    "Username must be at least 3 characters long.",
+  ID_MUST_BE_STRING: "Username must be a string.",
+  INVALID_ID:
+    "Username can only contain English letters, numbers, and hyphens.",
+  INTERNAL_SERVER_ERROR: "Something went wrong. Please try again later.",
+};
 
 function UserDetailLayout({ email }) {
   const [imagePreview, setImagePreview] = useState(null);
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
 
   const submitUserProfileData = async () => {
     try {
-      
-    } catch (error) {
-      
-    }
-  }
+      let imageUrl = null;
+      if (image) {
+        imageUrl = await uploadImage(image, username);
+        if (!imageUrl) {
+          toast.error("Image not uploaded , please try again.");
+          return;
+        }
+        console.log(image);
+      }
+      const options = {
+        name,
+        email,
+        username,
+        ...(imageUrl && { imageUrl }),
+        ...(bio && { bio }),
+      };
+      const registerResponse = await fetch(`${baseUrl}/api/user`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(options),
+      });
+      if (!registerResponse.ok) {
+        throw new Error();
+      }
+      const data = await registerResponse.json();
+      console.log("register status =>", data);
+    } catch (error) {}
+  };
   const id = useId();
   return (
     <>
@@ -129,6 +167,15 @@ function UserDetailLayout({ email }) {
                     className="absolute left-3 top-1/2 -translate-y-1/2 dark:text-dark-text-secondary text-light-text-secondary"
                   />
                 </div>
+                {username && (
+                  <p className="text-sm text-red-600">
+                    {!/^[a-zA-Z0-9-]+$/.test(username)
+                      ? "Username can only contain English letters, numbers, and hyphens."
+                      : username.length < 3
+                        ? "Username must be at least 3 characters long."
+                        : null}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
@@ -137,6 +184,9 @@ function UserDetailLayout({ email }) {
                   className="block text-sm font-medium dark:text-dark-text-secondary text-light-text-secondary"
                 >
                   Bio
+                  <span className="ml-1.5 dark:text-dark-text-mute text-light-text-mute text-xs">
+                    (Optional)
+                  </span>
                 </label>
 
                 <div className="relative rounded-xl border dark:bg-dark-bg-secondary bg-light-bg-secondary dark:border-dark-border-primary border-light-border-primary transition-colors duration-300 focus-within:border-light-primary-accent dark:focus-within:border-dark-primary-accent">
@@ -154,14 +204,14 @@ function UserDetailLayout({ email }) {
                     className="absolute left-3 top-5 dark:text-dark-text-secondary text-light-text-secondary"
                   />
                   <p className="absolute bottom-3 right-4 text-sm text-text-secondary">
-                    0 / 150
+                    {bio.length} / 150
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          <AuthButton condition={Boolean(image && name && username && bio)}>
+          <AuthButton condition={Boolean(name && username)}>
             Complete profile
           </AuthButton>
         </form>
