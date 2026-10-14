@@ -2,6 +2,8 @@ import EmailOTP from "../models/EmailOTP.model.js";
 import sendEmail from "../utilities/sendEmail.js";
 import bcrypt from "bcrypt";
 import User from "../models/user.model.js";
+import crypto from "crypto";
+import { decompressToken, generateToken } from "../utilities/token.js";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const userNameRegex = /^[a-zA-Z0-9-]+$/;
@@ -14,14 +16,19 @@ const registerNewUser = async (req, res) => {
     if (
       emailRegex.test(email) &&
       Boolean(name) &&
-      !userNameRegex.test(userNameRegex)
+      userNameRegex.test(username)
     ) {
       const isEmailAlradyUsed = await User.findOne({ email });
       const chechIsUsernameTaken = await User.findOne({ id: username });
       if (isEmailAlradyUsed) {
-        return res.json({ message: "EMAIL_IS_TAKEN" });
+        return res.json({
+          message:
+            "This email is already registered. Please use another email.",
+        });
       } else if (chechIsUsernameTaken) {
-        return res.json({ message: "USERNAME_IS_TAKEN" });
+        return res.json({
+          message: "This username is already taken. Please choose another one.",
+        });
       }
       const userData = await User.create({
         name,
@@ -30,25 +37,85 @@ const registerNewUser = async (req, res) => {
         ...(imageUrl && { imageUrl }),
         ...(bio && { bio }),
       });
+      const token = generateToken(userData._id);
       res.status(201).json({
         message: "Your account has been created successfully.",
+        token,
         userData,
       });
     } else {
-      res.json({ message: "EMAIL_OR_USERNAME_OR_NAME_WRONG_FORMAT" });
+      res.json({
+        message:
+          "Please check your email, name, and username. One or more fields are invalid.",
+      });
     }
   } catch (error) {
-    console.log(error);
-
-    res.json({ message: "INTERNAL_SERVER_ERROR" });
+    res.json({ message: "Something went wrong. Please try again later." });
   }
 };
+const updageUserData = async (req, res) => {
+  const { previousEmail, newEmail, username, name, imageUrl, bio } = req.body;
+  try {
+    if (
+      (emailRegex.test(previousEmail) && emailRegex.test(newEmail)) ||
+      Boolean(name) ||
+      userNameRegex.test(username) ||
+      Boolean(imageUrl) ||
+      Boolean(bio)
+    ) {
+      const userData = await User.findOneAndUpdate(
+        { email: previousEmail },
+        {
+          ...(name && { name }),
+          ...(username && { username }),
+          ...(newEmail && { email: newEmail }),
+          ...(imageUrl && { imageUrl }),
+          ...(bio && { bio }),
+        },
+      );
+      res.json({
+        message: "Your profile has been updated successfully.",
+      });
+    }
+  } catch (error) {
+    res.json({ message: "Something went wrong. Please try again later." });
+  }
+};
+const takeUserData = async (req, res) => {
+  const { token } = req.body;
+  if (token) {
+    try {
+      const userID = decompressToken(token);
 
+      if (!userID) throw Error();
+      try {
+        const userData = await User.findOne(
+          { _id: userID },
+          {
+            _id: false,
+            updatedAt: false,
+          },
+        );
+        if (userData) {
+          res.json(userData);
+        } else {
+          throw new Error("NOT_FOUND");
+        }
+      } catch (error) {
+        res.status(404).json({ message: error });
+      }
+    } catch (error) {
+      res.json({ message: "INVALID_TOKEN" });
+    }
+  } else {
+    res.status(400).json({ message: "INVALID_DATA" });
+  }
+};
 const sendCodeHandler = async (req, res) => {
   const { email } = req.body;
   if (emailRegex.test(email)) {
     try {
-      const code = Math.floor(Math.random() * 1000000);
+      const code = crypto.randomInt(1000000);
       const hashedCode = await bcrypt.hash(String(code), hashRounds);
       const htmlElements = `<!DOCTYPE html>
           <html lang="en">
@@ -178,7 +245,22 @@ const codeVerifierHandler = async (req, res) => {
               currentEmailOTP.hashedCode,
             );
             if (isCodeSame) {
-              res.json({ message: "VERIFIED" });
+              const temp = await EmailOTP.findOneAndDelete({ email });
+
+              const userData = await User.findOne(
+                { email },
+                { createdAt: false },
+              );
+              if (userData) {
+                const token = generateToken(userData._id);
+                return res.json({
+                  message: "VERIFIED",
+                  userStatus: "registerd",
+                  userData,
+                  token,
+                });
+              }
+              res.json({ message: "VERIFIED", userStatus: "not_registerd" });
             } else {
               return res.json({ message: "CODE_NOT_MATCH" });
             }
@@ -195,7 +277,6 @@ const codeVerifierHandler = async (req, res) => {
       return res.json({ message: "EMAIL_NOT_VALID" });
     }
   } catch (error) {
-    console.log(error);
     res.json({ message: "INTERNAL_SERVER_ERROR" });
   }
 };
@@ -231,4 +312,6 @@ export {
   codeVerifierHandler,
   checkIsUserIDAvailable,
   registerNewUser,
+  updageUserData,
+  takeUserData,
 };

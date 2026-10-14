@@ -1,0 +1,14 @@
+import jwt from "jsonwebtoken";
+const generateToken = (userID) => {
+  console.log(userID);
+
+  return jwt.sign({ id: userID }, process.env.JWT_SECRET, {
+    expiresIn: "7d",
+  });
+};
+
+const decompressToken = (token) => {
+  const data = jwt.verify(token, process.env.JWT_SECRET);
+  return data.id;
+};
+export { generateToken, decompressToken };
