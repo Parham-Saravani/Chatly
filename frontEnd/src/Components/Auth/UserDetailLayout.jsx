@@ -8,7 +8,6 @@ import AuthButton from "./AuthBtutton";
 import { baseUrl } from "../../utilities/constants";
 import toast from "react-hot-toast";
 import uploadImage from "../../utilities/uploadImage";
-import updateUserData from "../../utilities/updateUserData";
 import { useNavigate } from "react-router";
 import { AuthContext } from "../../Context/AuthContext";
 import { setCookie } from "../../utilities/cookie";

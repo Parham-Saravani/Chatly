@@ -5,7 +5,7 @@ import {
   FiCornerUpRight,
   FiMapPin,
 } from "react-icons/fi";
-function MessageContextMenu({ left, top }) {  
+function MessageContextMenu({ left, top }) {
   return (
     <div
       className={`absolute right-${left} top-17 z-50 mt-2 w-52 rounded-xl border dark:border-dark-border-primary border-light-border-primary dark:bg-dark-bg-card bg-light-bg-card p-1.5 shadow-xl`}
@@ -30,7 +30,7 @@ function MessageContextMenu({ left, top }) {
 
       <div className="my-1 border-t dark:border-dark-border-primary border-light-border-primary" />
 
-      <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-danger transition hover:bg-danger/10 cursor-pointer">
+      <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm dark:text-dark-danger text-light-danger transition dark:hover:bg-dark-danger/10 hover:bg-light-danger/10 cursor-pointer">
         <FiTrash2 className="h-4 w-4" />
         Delete message
       </button>

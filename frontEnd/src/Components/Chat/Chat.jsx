@@ -67,7 +67,7 @@ function Chat({
           </Activity>
         </div>
       </div>
-      <Activity mode={contextMenu === id ? "visible" : "hidden"}>
+      <Activity mode={contextMenu.id === id ? "visible" : "hidden"}>
         <ChatContextMenu contextMenu={contextMenu} />
       </Activity>
     </div>
