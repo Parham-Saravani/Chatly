@@ -1,4 +1,4 @@
-import { useId, useState } from "react";
+import { useContext, useId, useState } from "react";
 import AuthLayout from "./AuthLayout";
 import DetailHeader from "./elements/DeailHeader";
 import { FiUpload } from "react-icons/fi";
@@ -8,6 +8,10 @@ import AuthButton from "./AuthBtutton";
 import { baseUrl } from "../../utilities/constants";
 import toast from "react-hot-toast";
 import uploadImage from "../../utilities/uploadImage";
+import updateUserData from "../../utilities/updateUserData";
+import { useNavigate } from "react-router";
+import { AuthContext } from "../../Context/AuthContext";
+import { setCookie } from "../../utilities/cookie";
 
 const errors = {
   ID_TAKEN: "This username is already taken.",
@@ -20,6 +24,9 @@ const errors = {
 };
 
 function UserDetailLayout({ email }) {
+  const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const id = useId();
   const [imagePreview, setImagePreview] = useState(null);
   const [image, setImage] = useState(null);
   const [name, setName] = useState("");
@@ -28,37 +35,64 @@ function UserDetailLayout({ email }) {
 
   const submitUserProfileData = async () => {
     try {
-      let imageUrl = null;
+      let imageUrl = "";
       if (image) {
         imageUrl = await uploadImage(image, username);
-        if (!imageUrl) {
-          toast.error("Image not uploaded , please try again.");
+      }
+      if (!imageUrl) {
+        toast.error(
+          "Network error. Please check your internet connection and try again.",
+        );
+        return;
+      }
+      if (imageUrl) {
+        const options = {
+          name,
+          email,
+          username,
+          ...(imageUrl && { imageUrl }),
+          ...(bio && { bio }),
+        };
+        const registerResponse = await fetch(`${baseUrl}/api/user`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(options),
+        });
+        if (!registerResponse.ok) {
+          toast.error("Your account could not be created. Please try again.");
           return;
         }
-        console.log(image);
+        const { message, userData, token } = await registerResponse.json();
+        if (message === "Your account has been created successfully.") {
+          setCookie("auth-token", token, true);
+          toast.success("Your account has been created successfully.");
+          dispatch({
+            type: "LOGIN_IN",
+            data: {
+              name: userData.name,
+              id: userData.id,
+              email: userData.email,
+              imageUrl: userData.imageUrl,
+              bio: userData.bio,
+            },
+          });
+          navigate("/", { replace: true });
+          return;
+        }
+        toast.error(message);
+        return;
       }
-      const options = {
-        name,
-        email,
-        username,
-        ...(imageUrl && { imageUrl }),
-        ...(bio && { bio }),
-      };
-      const registerResponse = await fetch(`${baseUrl}/api/user`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(options),
-      });
-      if (!registerResponse.ok) {
-        throw new Error();
-      }
-      const data = await registerResponse.json();
-      console.log("register status =>", data);
-    } catch (error) {}
+
+      toast.error("Your account could not be created. Please try again.");
+    } catch (error) {
+      toast.error(
+        "Network error. Please check your internet connection and try again.",
+      );
+    }
   };
-  const id = useId();
+
   return (
     <>
       <title>Complete Profile | Chatly</title>
@@ -218,6 +252,7 @@ function UserDetailLayout({ email }) {
       </AuthLayout>
     </>
   );
+  ``;
 }
 
 export default UserDetailLayout;

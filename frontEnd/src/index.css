@@ -105,7 +105,21 @@
     background: rgba(121 77 255 / 0.5);
   }
 }
+@keyframes line {
+  0% {
+    left: -50%;
+    opacity: 0.5;
+  }
 
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    left: 100%;
+    opacity: 0.5;
+  }
+}
 @theme {
   /* Dark Theme */
   --color-dark-text-primary: #f8fafc;
@@ -136,13 +150,14 @@
   --color-light-hover-accent: #6d3df0;
   --color-light-active-accent: #5b21b6;
 
-  --color-success: #16a34a;
-  --color-danger: #dc2626;
+  --color-light-success: #16a34a;
+  --color-light-danger: #dc2626;
 
   --font-Inter: "Inter";
 
   --animate-fadeIn: fadeIn 300ms ease-in;
   --animate-fadeOut: fadeOut 300ms ease-in;
   --animate-loader: loader 1s infinite linear alternate;
+  --animate-line: line 1.8s ease-in-out infinite;
 }
 @custom-variant dark (&:where(.dark, .dark *));

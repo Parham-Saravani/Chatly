@@ -42,6 +42,7 @@ function OTPInputs({ setCode, resetInputs, setResetInputs }) {
         item.disabled = false;
       });
       setIsPasted(true);
+      setCode(value)
       setCurrentInput(inputs.current.length - 1);
       inputs.current[inputs.current.length - 1].focus();
     }

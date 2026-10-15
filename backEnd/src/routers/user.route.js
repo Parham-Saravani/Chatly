@@ -4,13 +4,13 @@ import {
   codeVerifierHandler,
   checkIsUserIDAvailable,
   registerNewUser,
-  updageUserData,
+  updateUserData,
   takeUserData,
 } from "../controllers/user.controller.js";
 const router = Router();
 
 router.post("/", registerNewUser);
-router.put("/", updageUserData);
+router.put("/", updateUserData);
 router.post("/me", takeUserData);
 router.post("/send-code", sendCodeHandler);
 router.post("/verify-code", codeVerifierHandler);

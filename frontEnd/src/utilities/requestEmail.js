@@ -1,6 +1,6 @@
 import { baseUrl } from "./constants";
 
-const requestEmail = async (email) => {
+const requestEmail = async (email) => {  
   try {
     const response = await fetch(`${baseUrl}/api/user/send-code`, {
       method: "POST",

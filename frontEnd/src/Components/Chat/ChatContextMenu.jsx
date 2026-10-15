@@ -1,9 +1,7 @@
 import { FiArchive, FiTrash2 } from "react-icons/fi";
 import { MdPushPin } from "react-icons/md";
 
-function ChatContextMenu({left , top}) {
-  console.log(left);
-  
+function ChatContextMenu({left , top}) {  
   return (
     <div className={`absolute left-${left} top-${top} top-full z-50 mt-2 w-56 rounded-xl border dark:border-dark-border-primary border-light-border-primary dark:bg-dark-bg-primary bg-light-bg-card p-1.5 shadow-xl`}>
       <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-text-primary transition dark:hover:bg-dark-bg-secondary hover:bg-light-bg-secondary cursor-pointer">

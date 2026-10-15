@@ -8,6 +8,10 @@ import { baseUrl } from "../../utilities/constants";
 import AuthBtutton from "./AuthBtutton";
 import OTPFooter from "./elements/OTPFooter";
 import OTPHeader from "./elements/OTPHeader";
+import { useNavigate } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext";
+import { setCookie } from "../../utilities/cookie";
 
 const messages = {
   CODE_NOT_MATCH: "The verification code is incorrect.",
@@ -18,30 +22,9 @@ const messages = {
   INTERNAL_SERVER_ERROR: "Something went wrong. Please try again later.",
 };
 
-const codeVerifierHandler = async (code, email, setResetInputs, setStep) => {
-  try {
-    const response = await fetch(`${baseUrl}/api/user/verify-code`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ code, email }),
-    });
-    if (!response.ok) {
-      toast.error("We got Error");
-      return;
-    }
-    const data = await response.json();
-    if (data.message === "VERIFIED") {
-      setStep("detail");
-    } else {
-      toast.error(messages[data.message]);
-      setResetInputs(true);
-    }
-  } catch (error) {}
-};
-
 function OTPLayout({ email, setStep, setEmail }) {
+  const { dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [code, setCode] = useState("");
   const [timer, setTimer] = useState(0);
   const [resetInputs, setResetInputs] = useState(false);
@@ -65,6 +48,32 @@ function OTPLayout({ email, setStep, setEmail }) {
     return () => clearInterval(timerInterval);
   }, [isRunning]);
 
+  const codeVerifierHandler = async () => {
+    try {
+      const response = await fetch(`${baseUrl}/api/user/verify-code`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code, email }),
+      });
+      if (!response.ok) {
+        toast.error("We got Error");
+        return;
+      }
+      const { message, userStatus, userData, token } = await response.json();
+
+      if (message === "VERIFIED" && userStatus === "registerd") {
+        dispatch({ type: "LOGIN_IN", data: userData });
+        setCookie("auth-token", token);
+        return navigate("/", { replace: true });
+      } else if (message === "VERIFIED" && userStatus === "not_registerd") {
+        return setStep("detail");
+      }
+      toast.error(messages[message]);
+      setResetInputs(true);
+    } catch (error) {}
+  };
   const calculateTimer = () => {
     const minute = Math.floor(timer / 60);
     const second = timer - minute * 60;

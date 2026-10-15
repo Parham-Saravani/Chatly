@@ -25,10 +25,7 @@ function ChatPage() {
         onClick={clearContextMenu}
         className="flex h-full min-h-0 flex-1 flex-col overflow-hidden dark:bg-dark-bg-primary bg-light-bg-primary"
       >
-        <header
-          onClick={(event) => console.log("fasdfa")}
-          className="cursor-pointer shadow-xl flex items-center justify-between border-b border-light-border-primary dark:border-dark-border-primary dark:bg-dark-bg-card bg-light-bg-card py-3 px-6 max-xl:px-2 max-sm:px-1"
-        >
+        <header className="cursor-pointer shadow-xl flex items-center justify-between border-b border-light-border-primary dark:border-dark-border-primary dark:bg-dark-bg-card bg-light-bg-card py-3 px-6 max-xl:px-2 max-sm:px-1">
           <div className="flex min-w-0 items-center gap-3">
             <button
               onClick={() => navigate("/")}
@@ -51,7 +48,6 @@ function ChatPage() {
             <Button
               onSmash={(event) => {
                 event.stopPropagation();
-                console.log("btn Clicked!");
               }}
               Icon={FiMoreVertical}
               size={20}

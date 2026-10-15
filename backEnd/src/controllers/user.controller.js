@@ -53,7 +53,7 @@ const registerNewUser = async (req, res) => {
     res.json({ message: "Something went wrong. Please try again later." });
   }
 };
-const updageUserData = async (req, res) => {
+const updateUserData = async (req, res) => {
   const { previousEmail, newEmail, username, name, imageUrl, bio } = req.body;
   try {
     if (
@@ -312,6 +312,6 @@ export {
   codeVerifierHandler,
   checkIsUserIDAvailable,
   registerNewUser,
-  updageUserData,
+  updateUserData,
   takeUserData,
 };

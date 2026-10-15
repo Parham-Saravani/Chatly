@@ -37,7 +37,7 @@ function Chat({
           }}
           src={avatar}
           alt={`${name} profile`}
-          className={`${isLoading && "bg-gray-700 animate-pulse"} h-12 w-12 rounded-full object-cover`}
+          className={`${isLoading && "bg-gray-700 animate-pulse"} size-13 max-sm:size-10 rounded-full object-cover`}
         />
 
         <Activity mode={isOnline ? "visible" : "hidden"}>
@@ -47,21 +47,21 @@ function Chat({
 
       <div className="min-w-0 flex-1">
         <div className="mb-1 flex items-center justify-between gap-2">
-          <h3 className="truncate text-sm font-semibold text-light-text-primary dark:text-dark-text-primary">
+          <h3 className="truncate text-sm max-sm:text-xs font-semibold text-light-text-primary dark:text-dark-text-primary">
             {name}
           </h3>
 
-          <span className="shrink-0 text-xs text-light-text-secondary dark:text-dark-text-secondary">
+          <span className="shrink-0 text-xs max-sm:text-[10px] text-light-text-secondary dark:text-dark-text-secondary">
             {time}
           </span>
         </div>
 
         <div className="flex items-center justify-between gap-2">
-          <p className="truncate text-xs text-light-text-secondary dark:text-dark-text-secondary">
+          <p className="truncate text-xs max-sm:text-[11px] max-sm:w-30  text-light-text-secondary dark:text-dark-text-secondary">
             {lastMessage}
           </p>
           <Activity mode={unreadCount !== 0 ? "visible" : "hidden"}>
-            <span className="flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full dark:bg-dark-hover-accent bg-light-hover-accent px-1.5 text-[10px] font-medium text-white">
+            <span className="flex size-4.5 max-sm:size-4 shrink-0 items-center justify-center rounded-full dark:bg-dark-hover-accent bg-light-hover-accent px-1.5 text-[10px] font-medium text-white">
               {unreadCount}
             </span>
           </Activity>
