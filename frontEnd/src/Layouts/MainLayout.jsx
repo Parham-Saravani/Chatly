@@ -1,10 +1,11 @@
 import { Outlet, useLocation } from "react-router";
 import Sidebar from "../Components/Sidebar";
-import { useEffect } from "react";
-import { getCookie } from "../utilities/cookie";
+import { useEffect, useState } from "react";
+import Menu from "../Components/Menu/Menu";
 
 function MainLayout() {
   const { state } = useLocation();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     document.addEventListener("contextmenu", (event) => {
@@ -18,7 +19,9 @@ function MainLayout() {
         name="description"
         content="Connect with friends, join communities, and chat in real time with Chatly."
       />
-      <Sidebar />
+      <Menu isMenuOpen={isMenuOpen} />
+
+      <Sidebar setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen} />
       <div
         className={`flex w-full h-full max-lg:fixed max-lg:-right-260 max-md:-right-220 max-sm:-right-200 max-lg:transition-right max-lg:duration-300 ${state === "shot-chat-history" && "right-0! z-1000"}`}
       >
