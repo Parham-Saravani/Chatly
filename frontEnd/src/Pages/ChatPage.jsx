@@ -1,5 +1,5 @@
 import { FiArrowLeft, FiMessageSquare, FiMoreVertical } from "react-icons/fi";
-import { useNavigate, useSearchParams } from "react-router";
+import { useLocation, useNavigate, useSearchParams } from "react-router";
 import { messages } from "../data";
 import Message from "../Components/Chat/Message";
 import SendMessageInput from "../Components/Chat/SendMessageInput";
@@ -8,6 +8,9 @@ import Button from "../Components/Button";
 
 function ChatPage() {
   const navigate = useNavigate();
+  const {
+    state: { name, isOnline },
+  } = useLocation();
   const [searchParams] = useSearchParams();
   const [contextMenu, setContextMenu] = useState({});
   const chatID = messages[searchParams.get("chatID")];
@@ -36,11 +39,15 @@ function ChatPage() {
 
             <div className="min-w-0">
               <h2 className="truncate text-sm font-semibold tracking-wide text-text-primary sm:text-base">
-                Alex Carter
+                {name}
               </h2>
-              <p className="mt-1 truncate text-xs dark:text-dark-text-secondary text-light-text-secondary">
-                last seen recently
-              </p>
+              {isOnline ? (
+                <p className="mt-1 truncate text-xs text-light-primary-accent dark:text-dark-primary-accent">online</p>
+              ) : (
+                <p className="mt-1 truncate text-xs dark:text-dark-text-secondary text-light-text-secondary">
+                  last seen recently
+                </p>
+              )}
             </div>
           </div>
 

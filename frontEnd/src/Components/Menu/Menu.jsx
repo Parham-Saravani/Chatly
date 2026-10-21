@@ -1,4 +1,6 @@
 import { useContext } from "react";
+import lightLogo from "/Images/light-logo-no-text.png";
+import darkLogo from "/Images/dark-logo-no-text.png";
 import {
   FiMessageCircle,
   FiUser,
@@ -27,8 +29,8 @@ function Menu({ isMenuOpen }) {
 
   return (
     <div
-      className={`h-full custom-scroll px-4 py-5 transition-all duration-300 ${
-        isMenuOpen ? "w-110" : "w-19"
+      className={`h-full custom-scroll px-4 py-5 transition-all duration-300 max-sm:absolute max-sm:w-full! max-sm:bg-amber-400 max-sm:bottom-0 ${
+        isMenuOpen ? "w-110" : "w-20"
       }`}
     >
       <div
@@ -36,12 +38,16 @@ function Menu({ isMenuOpen }) {
           isMenuOpen ? "gap-3" : "justify-center"
         }`}
       >
-        <div className="shadow-[0_0_15px] dark:shadow-dark-hover-accent/50 shadow-light-hover-accent/50 flex size-10 shrink-0 items-center justify-center rounded-full bg-light-primary-accent text-white dark:bg-dark-primary-accent">
-          <FiMessageCircle size={23} />
+        <div className="flex items-center justify-center rounded-full">
+          <img
+            className="size-10"
+            src={theme === "dark" ? darkLogo : lightLogo}
+            alt=""
+          />
         </div>
 
         {isMenuOpen && (
-          <h1 className="text-xl font-bold text-light-text-primary dark:text-dark-text-primary">
+          <h1 className="text-2xl font-bold text-light-text-primary dark:text-dark-text-primary">
             Chatly
           </h1>
         )}
@@ -151,9 +157,15 @@ function Menu({ isMenuOpen }) {
           {isMenuOpen && (
             <label
               htmlFor="theme"
-              className="cursor-pointer dark:bg-dark-bg-secondary/50 bg-gray-200 w-11 h-5 rounded-2xl relative before:absolute before:w-3.5 before:h-3.5 before:rounded-full before:left-1 dark:before:bg-dark-bg-card before:bg-light-bg-card before:top-0 before:bottom-0 before:my-auto transition-colors duration-300 before:transition-all before:duration-300 dark:has-checked:bg-dark-primary-accent has-checked:before:bg-white has-checked:before:left-[57%] has-checked:bg-light-primary-accent"
+              className="cursor-pointer bg-gray-200 w-11 h-5 rounded-2xl relative before:absolute before:w-3.5 before:h-3.5 before:rounded-full before:left-1 before:bg-light-bg-card before:top-0 before:bottom-0 before:my-auto transition-colors duration-300 before:transition-all before:duration-300  has-checked:before:left-[57%] has-checked:bg-light-primary-accent"
             >
-              <input checked={theme === 'dark'} onChange={setTheme} type="checkbox" hidden id="theme" />
+              <input
+                checked={theme === "dark"}
+                onChange={setTheme}
+                type="checkbox"
+                hidden
+                id="theme"
+              />
             </label>
           )}
         </button>

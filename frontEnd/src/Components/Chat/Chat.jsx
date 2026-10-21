@@ -24,7 +24,7 @@ function Chat({
         });
       }}
       onClick={() => {
-        navigate(`/chat?chatID=${id}`, { state: "shot-chat-history" });
+        navigate(`/chat?chatID=${id}`, { state: { name, isOnline } });
         setContextMenu({});
       }}
       className="relative flex w-full items-center gap-3 rounded-xl p-3 text-left transition-colors duration-300 dark:hover:bg-dark-bg-secondary hover:bg-light-bg-secondary cursor-pointer"
@@ -41,7 +41,7 @@ function Chat({
         />
 
         <Activity mode={isOnline ? "visible" : "hidden"}>
-          <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-bg-primary bg-green-500" />
+          <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-light-bg-primary dark:border-dark-bg-primary bg-green-600" />
         </Activity>
       </div>
 
