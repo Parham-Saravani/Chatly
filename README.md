@@ -41,6 +41,7 @@ Chatly is a messaging app designed to provide a clean, intuitive, and responsive
   <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
   <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white" alt="npm">
 </p>
+
 ## 🚀 Getting Started
 
 ### Prerequisites
