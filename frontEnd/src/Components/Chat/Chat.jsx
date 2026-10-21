@@ -12,6 +12,7 @@ function Chat({
   contextMenu,
   setContextMenu,
   isGroup,
+  membersCount,
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -25,7 +26,9 @@ function Chat({
         });
       }}
       onClick={() => {
-        navigate(`/chat?chatID=${id}`, { state: { name, isOnline, isGroup } });
+        navigate(`/chat?chatID=${id}`, {
+          state: { name, isOnline, isGroup, membersCount },
+        });
         setContextMenu({});
       }}
       className="relative flex w-full items-center gap-3 rounded-xl p-3 text-left transition-colors duration-300 dark:hover:bg-dark-bg-secondary hover:bg-light-bg-secondary cursor-pointer"
