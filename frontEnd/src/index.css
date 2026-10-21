@@ -122,9 +122,14 @@
   --color-dark-bg-secondary: #0d1224;
   --color-dark-bg-card: #111827;
   --color-dark-border-primary: #1e293b;
+
   --color-dark-primary-accent: #7c4dff;
   --color-dark-hover-accent: #8b5cf6;
   --color-dark-active-accent: #6d28d9;
+
+  --color-dark-message-received: #111426;
+  --color-dark-message-sent: #6d4aff;
+
   --color-dark-success: #22c55e;
   --color-dark-danger: #ef4444;
 
@@ -141,6 +146,9 @@
   --color-light-primary-accent: #7c4dff;
   --color-light-hover-accent: #6d3df0;
   --color-light-active-accent: #5b21b6;
+
+  --color-light-message-received: #e9edf3;
+  --color-light-message-sent: #7c4dff;
 
   --color-light-success: #16a34a;
   --color-light-danger: #dc2626;

@@ -20,7 +20,7 @@ function Message({ id, text, time, isOwn, contextMenu, setContextMenu }) {
     >
       <div>
         <div
-          className={`${isOwn ? "dark:bg-dark-primary-accent bg-light-primary-accent rounded-br-md" : "dark:bg-dark-bg-secondary bg-light-bg-gray-100 rounded-bl-md"} rounded-2xl px-4 py-2.5`}
+          className={`${isOwn ? "dark:bg-dark-message-sent bg-light-message-sent rounded-br-md" : "dark:bg-dark-message-received bg-light-message-received rounded-bl-md"} rounded-2xl px-4 py-2.5`}
         >
           <p
             className={`text-sm leading-6 ${isOwn ? "text-dark-text-primary" : "text-light-text-primary dark:text-dark-text-primary"}`}

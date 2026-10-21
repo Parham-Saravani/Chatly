@@ -32,14 +32,14 @@ function Menu({ isMenuOpen, setIsMenuOpen }) {
   return (
     <div
       className={`h-full custom-scroll px-4 py-5 transition-all duration-300 bg-light-bg-primary dark:bg-dark-bg-primary max-sm:z-50 max-sm:bottom-0 ${
-        isMenuOpen ? "w-110 max-sm:absolute max-sm:w-full max-sm:" : "w-20 max-sm:w-0! overflow-hidden max-sm:px-0! max-sm:py-0!"
+        isMenuOpen ? "w-110 max-sm:absolute max-sm:w-full max-sm:" : "w-20 max-sm:w-0! max-sm:px-0! max-sm:overflow-hidden max-sm:py-0!"
       }`}
     >
       <div className="relative w-full h-full">
         <IoClose
           onClick={() => setIsMenuOpen(false)}
           size={35}
-          className={`${isMenuOpen ? 'block!' : ''} hidden absolute right-0 top-0 dark:hover:bg-gray-800 hover:bg-light-bg-secondary transition-colors duration-300 rounded-lg px-1.5 py-1.5 cursor-pointer dark:text-dark-text-primary text-light-text-primary`}
+          className={`${isMenuOpen ? 'max-sm:block!' : ''} hidden absolute right-0 top-0 dark:hover:bg-gray-800 hover:bg-light-bg-secondary transition-colors duration-300 rounded-lg px-1.5 py-1.5 cursor-pointer dark:text-dark-text-primary text-light-text-primary`}
         />
         <div
           className={`mb-6 flex md:items-center ${

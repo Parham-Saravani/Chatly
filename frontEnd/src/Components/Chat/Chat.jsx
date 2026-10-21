@@ -30,6 +30,7 @@ function Chat({
       onClick={() => {
         navigate(`/chat?chatID=${id}`, {
           state: {
+            message:'shot-chat-history',
             name,
             isOnline,
             isGroup,

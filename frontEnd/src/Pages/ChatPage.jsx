@@ -80,7 +80,7 @@ function ChatPage() {
 
         <div
           onScroll={clearContextMenu}
-          className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-4 py-6 sm:px-6 custom-scroll"
+          className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto px-4 py-6 sm:px-6 custom-scroll dark:bg-dark-bg-primary bg-light-bg-primary"
         >
           {chatData.map((item) => (
             <Message
