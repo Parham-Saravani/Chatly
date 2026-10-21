@@ -11,6 +11,7 @@ function Chat({
   avatar,
   contextMenu,
   setContextMenu,
+  isGroup,
 }) {
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ function Chat({
         });
       }}
       onClick={() => {
-        navigate(`/chat?chatID=${id}`, { state: { name, isOnline } });
+        navigate(`/chat?chatID=${id}`, { state: { name, isOnline, isGroup } });
         setContextMenu({});
       }}
       className="relative flex w-full items-center gap-3 rounded-xl p-3 text-left transition-colors duration-300 dark:hover:bg-dark-bg-secondary hover:bg-light-bg-secondary cursor-pointer"
@@ -40,7 +41,7 @@ function Chat({
           className={`${isLoading && "bg-gray-700 animate-pulse"} size-13 max-sm:size-10 rounded-full object-cover`}
         />
 
-        <Activity mode={isOnline ? "visible" : "hidden"}>
+        <Activity mode={isOnline && !isGroup ? "visible" : "hidden"}>
           <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-light-bg-primary dark:border-dark-bg-primary bg-green-600" />
         </Activity>
       </div>

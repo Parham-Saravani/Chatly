@@ -9,7 +9,7 @@ import Button from "../Components/Button";
 function ChatPage() {
   const navigate = useNavigate();
   const {
-    state: { name, isOnline },
+    state: { name, isOnline, isGroup },
   } = useLocation();
   const [searchParams] = useSearchParams();
   const [contextMenu, setContextMenu] = useState({});
@@ -41,8 +41,14 @@ function ChatPage() {
               <h2 className="truncate text-sm font-semibold tracking-wide text-text-primary sm:text-base">
                 {name}
               </h2>
-              {isOnline ? (
-                <p className="mt-1 truncate text-xs text-light-primary-accent dark:text-dark-primary-accent">online</p>
+              {isGroup ? (
+                <p className="mt-1 truncate text-xs dark:text-dark-text-secondary text-light-text-secondary">
+                  2.5k subscribers
+                </p>
+              ) : isOnline ? (
+                <p className="mt-1 truncate text-xs text-light-primary-accent dark:text-dark-primary-accent">
+                  online
+                </p>
               ) : (
                 <p className="mt-1 truncate text-xs dark:text-dark-text-secondary text-light-text-secondary">
                   last seen recently
