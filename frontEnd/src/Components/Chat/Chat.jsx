@@ -12,6 +12,8 @@ function Chat({
   contextMenu,
   setContextMenu,
   isGroup,
+  bio,
+  username,
   membersCount,
 }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -27,7 +29,15 @@ function Chat({
       }}
       onClick={() => {
         navigate(`/chat?chatID=${id}`, {
-          state: { name, isOnline, isGroup, membersCount },
+          state: {
+            name,
+            isOnline,
+            isGroup,
+            membersCount,
+            username,
+            avatar,
+            bio,
+          },
         });
         setContextMenu({});
       }}

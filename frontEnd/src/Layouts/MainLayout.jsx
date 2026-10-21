@@ -19,7 +19,7 @@ function MainLayout() {
         name="description"
         content="Connect with friends, join communities, and chat in real time with Chatly."
       />
-      <Menu isMenuOpen={isMenuOpen} />
+      <Menu setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen} />
 
       <Sidebar setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen} />
       <div
