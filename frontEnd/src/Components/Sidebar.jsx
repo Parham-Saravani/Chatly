@@ -3,14 +3,13 @@ import Search from "./Search";
 import { finalData } from "../data";
 import { IoMenu, IoClose } from "react-icons/io5";
 import { useState } from "react";
-import { AuthContext } from "../Context/AuthContext";
 import Button from "./Button";
 
-function Sidebar({ isMenuOpen , setIsMenuOpen}) {
+function Sidebar({ isMenuOpen, setIsMenuOpen }) {
   const [contextMenu, setContextMenu] = useState({});
   return (
     <div
-      className={`${isMenuOpen ? "w-170" : "w-200"} h-full bg-light-bg-card dark:bg-dark-bg-card max-lg:w-full overflow-y-hidden border-r border-r-light-border-primary dark:border-r-dark-border-primary px-1.5 py-4 shadow-xl`}
+      className={`${isMenuOpen ? "w-170" : "w-200"} z-30 h-full bg-light-bg-card dark:bg-dark-bg-card max-lg:w-full overflow-y-hidden border-r border-r-light-border-primary dark:border-r-dark-border-primary px-1.5 py-4`}
     >
       <div className="px-2 gap-4 flex items-center justify-between mb-2">
         <Button

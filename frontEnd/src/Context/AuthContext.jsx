@@ -37,7 +37,7 @@ function AuthProvider({ children }) {
             throw new Error();
           }
           const userData = await response.json();
-          if (userData) {
+          if (userData.message !== "INVALID_TOKEN") {
             dispatch({ type: "LOGIN_IN", data: userData });
           }
         }

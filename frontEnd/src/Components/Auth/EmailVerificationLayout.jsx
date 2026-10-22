@@ -9,6 +9,7 @@ import EmailVerificationHeader from "./elements/EmailVerificationHeader";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const messages = {
+  EMAIL_NOT_VALID: "Please enter a valid email address.",
   TRY_ONE_MINUTE_LATER:
     "Please wait one minute before requesting another code.",
   EMAIL_NOT_VALID: "Please enter a valid email address.",
@@ -66,7 +67,10 @@ function EmailVerificationLayout({ email, setEmail, setStep }) {
                 required
                 className="flex-1 rounded-xl py-3.5 pl-11 pr-4 text-sm dark:text-dark-text-primary text-light-text-primary outline-none placeholder:text-text-mute"
               />
-              <FiMail size={20} className="ml-3 absolute shrink-0 top-0 bottom-0 my-auto dark:text-dark-text-secondary text-light-text-secondary" />
+              <FiMail
+                size={20}
+                className="ml-3 absolute shrink-0 top-0 bottom-0 my-auto dark:text-dark-text-secondary text-light-text-secondary"
+              />
             </div>
             <p ref={emailErrorRef} className="text-sm text-red-600 hidden">
               Please enter a valid email address.

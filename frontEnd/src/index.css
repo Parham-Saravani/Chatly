@@ -134,23 +134,24 @@
   --color-dark-danger: #ef4444;
 
   /* Light Theme */
-  --color-light-text-primary: #0f172a;
+  --color-light-text-primary: #1e293b;
   --color-light-text-secondary: #475569;
-  --color-light-text-mute: #94a3b8;
+  --color-light-text-mute: #64748b;
 
-  --color-light-bg-primary: #f8fafc;
-  --color-light-bg-secondary: #f1f5f9;
+  --color-light-bg-primary: #f1f3f7;
+  --color-light-bg-secondary: #e8ebf2;
   --color-light-bg-card: #ffffff;
-  --color-light-border-primary: #e2e8f0;
+  --color-light-border-primary: #d8deea;
 
   --color-light-primary-accent: #7c4dff;
   --color-light-hover-accent: #6d3df0;
   --color-light-active-accent: #5b21b6;
 
-  --color-light-message-received: #e9edf3;
+  --color-light-message-received: #ffffff;
   --color-light-message-sent: #7c4dff;
+  --color-light-message-sent-text: #ffffff;
 
-  --color-light-success: #16a34a;
+  --color-light-success: #15803d;
   --color-light-danger: #dc2626;
 
   --font-Inter: "Inter";

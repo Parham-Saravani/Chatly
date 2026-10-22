@@ -24,7 +24,7 @@ function MainLayout() {
       <Sidebar setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen} />
 
       <div
-        className={`flex w-full h-full max-lg:fixed max-lg:-right-260 max-md:-right-220 max-sm:-right-200 max-lg:transition-right max-lg:duration-300 ${state?.message === "shot-chat-history" && "right-0! z-1000"}`}
+        className={`flex w-full h-full max-lg:fixed max-lg:-right-260 max-md:-right-220 max-sm:-right-200 max-lg:transition-right max-lg:duration-300 ${state?.message === "shot-chat-history" && "right-0! max-lg:z-40"}`}
       >
         <Outlet />
       </div>

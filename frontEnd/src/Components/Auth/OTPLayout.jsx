@@ -22,6 +22,13 @@ const messages = {
   INTERNAL_SERVER_ERROR: "Something went wrong. Please try again later.",
 };
 
+const otpMessages = {
+  EMAIL_NOT_VALID: "Please enter a valid email address.",
+  TRY_ONE_MINUTE_LATER:
+    "Please wait one minute before requesting another code.",
+  EMAIL_NOT_VALID: "Please enter a valid email address.",
+};
+
 function OTPLayout({ email, setStep, setEmail }) {
   const { dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -108,10 +115,14 @@ function OTPLayout({ email, setStep, setEmail }) {
 
           {timer === 0 ? (
             <span
-              onClick={() => {
-                setTimer(60);
-                setIsRunning(true);
-                requestEmail(email);
+              onClick={async () => {
+                const responst = await requestEmail(email);
+                if (responst.message === "EMAIL_SENT") {
+                  setTimer(60);
+                  setIsRunning(true);
+                  return;
+                }
+                toast.error(otpMessages[responst.message]);
               }}
               className="text-center block text-sm mt-7 dark:text-dark-primary-accent text-light-primary-accent transition-colors duration-300 dark:hover:text-dark-primary-accent/80 hover:text-light-primary-accent/80 cursor-pointer"
             >

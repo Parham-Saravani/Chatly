@@ -1,13 +1,19 @@
+import { createPortal } from "react-dom";
+
 function Modal({ children, onClose, isModalOpen }) {
-  return (
+  return createPortal(
     <div
       onClick={onClose}
-      className={`${isModalOpen ? "z-50 opacity-100" : "-z-10 opacity-10"} fixed flex justify-center items-center inset-0 bg-black/50 transition-opacity duration-300`}
+      className={`${isModalOpen ? "z-50 opacity-100" : "-z-10 opacity-10"} max-sm:px-10 absolute flex justify-center items-start pt-20 inset-0 bg-black/40 transition-opacity duration-300`}
     >
-      <div className="dark:bg-dark-bg-card bg-light-bg-card w-120 px-3 py-3 rounded-xl">
+      <div
+        onClick={(event) => event.stopPropagation()}
+        className="dark:bg-dark-bg-secondary bg-light-bg-secondary dark:backdrop-blur-2xl w-120 px-4 py-4 rounded-xl"
+      >
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
