@@ -1,36 +1,46 @@
-import { useContext } from "react";
 import { Navigate, Outlet } from "react-router";
-import { AuthContext } from "../Context/AuthContext";
+import useAuthentication from "../Hooks/useAuthentication";
+import useAuth from "../Store/AuthStore";
+import lightLogo from "/Images/light-logo-no-text.png";
+import darkLogo from "/Images/dark-logo-no-text.png";
+import useThemeStore from "../Store/ThemeStore";
+import { useEffect } from "react";
 
 function PrivateRoute() {
-  const { userData, isAuthLoading } = useContext(AuthContext);
+  const theme = useThemeStore((state) => state.theme);
+  const { isLoading, takeUserData } = useAuthentication();
+  const userData = useAuth((state) => state.userData);
+  
+  useEffect(() => {
+    (async () => {
+      takeUserData()
+    })()
+  } , [])
 
-  if (isAuthLoading) {
+  if (isLoading) {
     return (
-      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-light-bg-primary dark:bg-dark-bg-primary">
-        {/* Loading Content */}
-        <div className="flex flex-col items-center">
-          <p className="text-2xl font-semibold tracking-tight text-light-text-primary dark:text-dark-text-primary">
-            Chat
-            <span className="text-light-primary-accent dark:text-dark-primary-accent">
-              ly
-            </span>
-          </p>
+      <div
+        className={`${theme === "dark" ? "dark-custom-bg" : "light-custom-bg"} fixed inset-0 z-50 flex items-center justify-center bg-light-bg-primary backdrop-blur-xl dark:bg-dark-bg-primary`}
+      >
+        <div className="animate-fadeIn flex justify-center items-center flex-col bg-light-bg-card rounded-xl py-8 w-60 dark:bg-dark-bg-secondary/70">
+          <img
+            className="size-16 object-contain"
+            src={theme === "dark" ? darkLogo : lightLogo}
+            alt="Chatly"
+          />
 
-          <p className="mt-3 text-sm text-light-text-secondary dark:text-dark-text-secondary">
+          <p className="mt-3 text-sm font-medium tracking-wide text-light-text-secondary dark:text-dark-text-secondary">
             Getting things ready
+            <span className="ml-1 animate-pulse">...</span>
           </p>
 
-          {/* Progress Line */}
-          <div className="relative mt-8 h-[3px] w-40 overflow-hidden rounded-full bg-light-border-primary dark:bg-dark-border-primary">
-            <div className="absolute inset-y-0 w-1/2 animate-line rounded-full bg-light-primary-accent dark:bg-dark-primary-accent" />
-          </div>
+          <div className="mt-4 aspect-square w-3.5 h-3.5 rounded-full animate-loader"></div>
         </div>
       </div>
     );
   }
 
-  if (Object.keys(userData).length) {
+  if (userData && Object.keys(userData)?.length) {
     return <Outlet />;
   }
 

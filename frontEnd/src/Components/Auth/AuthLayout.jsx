@@ -1,8 +1,6 @@
 import darkIcon from "/Images/Dark-Icon.png";
 import lightIcon from "/Images/Light-Icon.png";
-import { useContext } from "react";
-import { ThemeContext } from "../../Context/ThemeContext";
-
+import useTheme from "../../Store/ThemeStore";
 function AuthLayout({
   card,
   children,
@@ -12,7 +10,7 @@ function AuthLayout({
   setEmail,
   setStep,
 }) {
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useTheme((state) => state.theme);
 
   return (
     <div

@@ -9,9 +9,8 @@ import AuthBtutton from "./AuthBtutton";
 import OTPFooter from "./elements/OTPFooter";
 import OTPHeader from "./elements/OTPHeader";
 import { useNavigate } from "react-router";
-import { useContext } from "react";
-import { AuthContext } from "../../Context/AuthContext";
 import { setCookie } from "../../utilities/cookie";
+import useAuth from "../../Store/AuthStore";
 
 const messages = {
   CODE_NOT_MATCH: "The verification code is incorrect.",
@@ -30,7 +29,7 @@ const otpMessages = {
 };
 
 function OTPLayout({ email, setStep, setEmail }) {
-  const { dispatch } = useContext(AuthContext);
+  const changeUserData = useAuth((state) => state.changeUserData);
   const navigate = useNavigate();
   const [code, setCode] = useState("");
   const [timer, setTimer] = useState(0);
@@ -71,7 +70,7 @@ function OTPLayout({ email, setStep, setEmail }) {
       const { message, userStatus, userData, token } = await response.json();
 
       if (message === "VERIFIED" && userStatus === "registerd") {
-        dispatch({ type: "LOGIN_IN", data: userData });
+        changeUserData(userData);
         setCookie("auth-token", token);
         return navigate("/", { replace: true });
       } else if (message === "VERIFIED" && userStatus === "not_registerd") {

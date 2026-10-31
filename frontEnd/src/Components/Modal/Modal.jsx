@@ -8,7 +8,7 @@ function Modal({ children, onClose, isModalOpen }) {
     >
       <div
         onClick={(event) => event.stopPropagation()}
-        className="dark:bg-dark-bg-secondary bg-light-bg-secondary dark:backdrop-blur-2xl w-120 px-4 py-4 rounded-xl"
+        className="dark:bg-dark-bg-card bg-light-bg-card dark:backdrop-blur-2xl w-120 px-4 py-4 rounded-xl"
       >
         {children}
       </div>

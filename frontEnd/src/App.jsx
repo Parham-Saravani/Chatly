@@ -1,16 +1,14 @@
 import { RouterProvider } from "react-router";
 import router from "./routes";
-import ThemeProvider from "./Context/ThemeContext";
-import AuthProvider from "./Context/AuthContext";
+import useTheme from "./Hooks/useTheme";
+import { useEffect } from "react";
 
 function App() {
-  return (
-    <AuthProvider>
-      <ThemeProvider>
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </AuthProvider>
-  );
+  const { syncTheme } = useTheme();
+  useEffect(() => {
+    syncTheme();
+  }, []);
+  return <RouterProvider router={router} />;
 }
 
 export default App;

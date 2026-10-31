@@ -1,4 +1,4 @@
-import { useContext, useId, useState } from "react";
+import { useId, useState } from "react";
 import AuthLayout from "./AuthLayout";
 import DetailHeader from "./elements/DeailHeader";
 import { FiUpload } from "react-icons/fi";
@@ -9,8 +9,8 @@ import { baseUrl } from "../../utilities/constants";
 import toast from "react-hot-toast";
 import uploadImage from "../../utilities/uploadImage";
 import { useNavigate } from "react-router";
-import { AuthContext } from "../../Context/AuthContext";
 import { setCookie } from "../../utilities/cookie";
+import useAuth from "../../Store/AuthStore";
 
 const errors = {
   ID_TAKEN: "This username is already taken.",
@@ -23,7 +23,7 @@ const errors = {
 };
 
 function UserDetailLayout({ email }) {
-  const { dispatch } = useContext(AuthContext);
+  const changeUserData = useAuth((state) => state.changeUserData);
   const navigate = useNavigate();
   const id = useId();
   const [imagePreview, setImagePreview] = useState(null);
@@ -67,7 +67,7 @@ function UserDetailLayout({ email }) {
         if (message === "Your account has been created successfully.") {
           setCookie("auth-token", token, true);
           toast.success("Your account has been created successfully.");
-          dispatch({
+          changeUserData({
             type: "LOGIN_IN",
             data: {
               name: userData.name,

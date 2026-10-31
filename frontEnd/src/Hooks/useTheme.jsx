@@ -1,12 +1,28 @@
-import { useContext } from "react";
-import { ThemeContext } from "../Context/ThemeContext";
+import useThemeStore from "../Store/ThemeStore";
+
+const changeHTMLClassList = (value) => {
+  if (value === "light") {
+    document.documentElement.classList.remove("dark");
+    return;
+  }
+  document.documentElement.classList.add("dark");
+};
 
 function useTheme() {
-  const { theme, dispatch } = useContext(ThemeContext);
-  const setTheme = () => {
-    dispatch({ type: "CHANGE_THEME" });
+  const theme = useThemeStore((state) => state.theme);
+  const storeChangeTheme = useThemeStore((state) => state.changeTheme);
+  const changeTheme = () => {
+    const finalTheme = theme === "light" ? "dark" : "light";
+    storeChangeTheme(finalTheme);
+    localStorage.setItem("theme", finalTheme);
+    changeHTMLClassList(finalTheme);
   };
-  return [theme, setTheme];
+  const syncTheme = () => {
+    const localTheme = localStorage.getItem("theme") || "light";
+    storeChangeTheme(localTheme);
+    changeHTMLClassList(localTheme);
+  };
+  return { syncTheme, changeTheme };
 }
 
 export default useTheme;
