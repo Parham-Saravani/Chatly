@@ -41,18 +41,17 @@ function Menu({ isMenuOpen, setIsMenuOpen }) {
   return (
     <>
       <div
-        className={`h-full custom-scroll px-4 py-5 transition-all duration-300 bg-light-bg-primary dark:bg-dark-bg-primary max-sm:z-50 max-sm:bottom-0 ${
+        onClick={() => setIsMenuOpen(false)}
+        className={`${isMenuOpen ? "max-lg:fixed  max-lg:inset-0 bg-black/30 z-50 opacity-100" : "opacity-0"} transition-opacity duration-300`}
+      ></div>
+      <div
+        className={`h-full max-lg:fixed  custom-scroll max-lg:-left-100 px-4 py-5 transition-left duration-300 bg-light-bg-primary dark:bg-dark-bg-primary max-sm:z-50 max-sm:bottom-0 ${
           isMenuOpen
-            ? "w-110 max-sm:absolute max-sm:w-full max-sm:"
-            : "w-20 max-sm:w-0! max-sm:px-0! max-sm:overflow-hidden max-sm:py-0!"
+            ? "w-120 max-lg:w-80 max-md:w-70 max-lg:z-10000 max-lg:left-0"
+            : "lg:w-20 max-md:-left-100 max-sm:px-0! max-sm:overflow-hidden max-sm:py-0!"
         }`}
       >
         <div className="relative w-full h-full">
-          <IoClose
-            onClick={() => setIsMenuOpen(false)}
-            size={35}
-            className={`${isMenuOpen ? "max-sm:block!" : ""} hidden absolute right-0 top-0 dark:hover:bg-gray-800 hover:bg-light-bg-secondary transition-colors duration-300 rounded-lg px-1.5 py-1.5 cursor-pointer dark:text-dark-text-primary text-light-text-primary`}
-          />
           <div
             className={`mb-6 flex md:items-center ${
               isMenuOpen ? "gap-3" : "justify-center"
