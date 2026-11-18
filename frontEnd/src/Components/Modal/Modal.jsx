@@ -4,7 +4,7 @@ function Modal({ children, onClose, isModalOpen }) {
   return createPortal(
     <div
       onClick={onClose}
-      className={`${isModalOpen ? "z-50 opacity-100" : "-z-10 opacity-10"} max-sm:px-10 absolute flex justify-center items-start pt-20 inset-0 bg-black/40 transition-opacity duration-300`}
+      className={`${isModalOpen ? "z-50 opacity-100" : "-z-10 opacity-10"} max-sm:px-5 absolute flex justify-center items-start pt-20 inset-0 bg-black/40 transition-opacity duration-300`}
     >
       <div
         onClick={(event) => event.stopPropagation()}

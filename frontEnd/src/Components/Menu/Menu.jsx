@@ -117,6 +117,7 @@ function Menu({ isMenuOpen, setIsMenuOpen }) {
                   onClick={() => {
                     setIsModalOpen(true);
                     setModalContent(label);
+                    setIsMenuOpen(false);
                   }}
                   type="button"
                   title={!isMenuOpen ? label : undefined}

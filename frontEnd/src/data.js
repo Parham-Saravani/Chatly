@@ -1218,7 +1218,7 @@ const chats = [
     isOnline: false,
     isGroup: true,
     isChannel: true,
-    membersCount: 3200,
+    membersCount: 150_000,
   },
 ];
 const avatarUrls = [

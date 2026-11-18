@@ -10,7 +10,10 @@ import Modal from "../Components/Modal/Modal";
 import UserModalContent from "../Components/Modal/elements/UserModalContent";
 
 const memberFormatter = (members) => {
-  return `${members.toString()[0]}.${members.toString()[1]} subscribers`;
+  const divided = members / 10;
+  if (!divided) {
+    return `${members.toString()[0]}.${members.toString()[1]} subscribers`;
+  }
 };
 
 function ChatPage() {

@@ -2,11 +2,22 @@ import Chat from "./Chat/Chat";
 import Search from "./Search";
 import { finalData } from "../data";
 import { IoMenu, IoClose } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "./Button";
 
 function Sidebar({ isMenuOpen, setIsMenuOpen }) {
+  const [searchText, setSearchText] = useState("");
   const [contextMenu, setContextMenu] = useState({});
+  const [chats , setChats ] = useState(finalData)
+  const changeText = (event) => {
+    setSearchText(event.target.value);
+  };
+
+
+  useEffect(() => {
+    console.log(searchText)
+  }, [searchText])
+
   return (
     <div
       className={`${isMenuOpen ? "w-170" : "w-200"} z-30 h-full bg-light-bg-card dark:bg-dark-bg-card max-lg:w-full overflow-y-hidden border-r border-r-light-border-primary dark:border-r-dark-border-primary px-1.5 py-4`}
@@ -17,10 +28,10 @@ function Sidebar({ isMenuOpen, setIsMenuOpen }) {
           Icon={isMenuOpen ? IoClose : IoMenu}
           size={27}
         />
-        <Search />
+        <Search searchText={searchText} changeText={changeText} />
       </div>
       <div className="overflow-y-scroll h-full custom-scroll pb-12">
-        {finalData.map((item) => (
+        {chats.map((item) => (
           <Chat
             setContextMenu={setContextMenu}
             contextMenu={contextMenu}

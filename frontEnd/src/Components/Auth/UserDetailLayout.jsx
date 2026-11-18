@@ -11,16 +11,7 @@ import uploadImage from "../../utilities/uploadImage";
 import { useNavigate } from "react-router";
 import { setCookie } from "../../utilities/cookie";
 import useAuth from "../../Store/AuthStore";
-
-const errors = {
-  ID_TAKEN: "This username is already taken.",
-  ID_MUST_BE_AT_LEAST_THREE_CHARACTERS:
-    "Username must be at least 3 characters long.",
-  ID_MUST_BE_STRING: "Username must be a string.",
-  INVALID_ID:
-    "Username can only contain English letters, numbers, and hyphens.",
-  INTERNAL_SERVER_ERROR: "Something went wrong. Please try again later.",
-};
+import registerUser from "../../utilities/registerUser";
 
 function UserDetailLayout({ email }) {
   const changeUserData = useAuth((state) => state.changeUserData);
@@ -38,53 +29,39 @@ function UserDetailLayout({ email }) {
       if (image) {
         imageUrl = await uploadImage(image, username);
       }
-      if (!imageUrl) {
+      if (!imageUrl && image) {
         toast.error(
           "Network error. Please check your internet connection and try again.",
         );
         return;
       }
-      if (imageUrl) {
-        const options = {
-          name,
-          email,
-          username,
-          ...(imageUrl && { imageUrl }),
-          ...(bio && { bio }),
-        };
-        const registerResponse = await fetch(`${baseUrl}/api/user`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+
+      const options = {
+        name,
+        email,
+        username,
+        ...(imageUrl && { imageUrl }),
+        ...(bio && { bio }),
+      };
+      const { message, userData, token } = await registerUser(options);
+
+      if (message === "Your account has been created successfully.") {
+        setCookie("auth-token", token, true);
+        toast.success("Your account has been created successfully.");
+        changeUserData({
+          type: "LOGIN_IN",
+          data: {
+            name: userData.name,
+            id: userData.id,
+            email: userData.email,
+            imageUrl: userData.imageUrl,
+            bio: userData.bio,
           },
-          body: JSON.stringify(options),
         });
-        if (!registerResponse.ok) {
-          toast.error("Your account could not be created. Please try again.");
-          return;
-        }
-        const { message, userData, token } = await registerResponse.json();
-        if (message === "Your account has been created successfully.") {
-          setCookie("auth-token", token, true);
-          toast.success("Your account has been created successfully.");
-          changeUserData({
-            type: "LOGIN_IN",
-            data: {
-              name: userData.name,
-              id: userData.id,
-              email: userData.email,
-              imageUrl: userData.imageUrl,
-              bio: userData.bio,
-            },
-          });
-          navigate("/", { replace: true });
-          return;
-        }
-        toast.error(message);
+        navigate("/", { replace: true });
         return;
       }
-
-      toast.error("Your account could not be created. Please try again.");
+      toast.error(message);
     } catch (error) {
       toast.error(
         "Network error. Please check your internet connection and try again.",

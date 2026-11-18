@@ -14,19 +14,43 @@ function EditProfile({ onClose }) {
   const [imagePreview, setImagePreview] = useState(userData.imageUrl);
 
   const inputs = [
-    { state: setUserName, value: userName, label: "Name", type: "input" },
-    { state: setUserID, value: userID, label: "Username", type: "input" },
-    { state: setUserBio, value: userBio, label: "Bio", type: "textarea" },
+    {
+      state: setUserName,
+      value: userName,
+      label: "Name",
+      type: "input",
+      placeholder: "Enter your name",
+    },
+    {
+      state: setUserID,
+      value: userID,
+      label: "Username",
+      type: "input",
+      placeholder: "Enter your username",
+    },
+    {
+      state: setUserBio,
+      value: userBio,
+      label: "Bio",
+      type: "textarea",
+      placeholder: "Write something about yourself...",
+    },
   ];
 
   return (
-    <div className="flex flex-col items-center gap-5 p-5">
-      <div className="group relative cursor-pointer">
-        <img
-          src={imagePreview}
-          alt="Profile"
-          className="size-24 rounded-full object-cover"
-        />
+    <div className="flex flex-col items-center gap-5 p-5 max-sm:px-1 max-sm:py-2">
+      <div className="group relative cursor-pointer size-24">
+        {imagePreview ? (
+          <img
+            src={imagePreview}
+            alt="Profile"
+            className="object-cover rounded-full"
+          />
+        ) : (
+          <div className="dark:bg-dark-primary-accent flex justify-center items-center text-5xl rounded-full w-full h-full">
+            {userName[0]}
+          </div>
+        )}
 
         <label
           htmlFor="edit-profile-image-input"
@@ -57,9 +81,10 @@ function EditProfile({ onClose }) {
               <input
                 type="text"
                 name="name"
+                placeholder={item.placeholder}
                 onInput={(event) => item.state(event.target.value)}
                 value={item.value}
-                className="w-full mt-1 rounded-lg border dark:border-dark-border-primary/50 dark:bg-dark-bg-primary/70 bg-light-bg-primary border-light-border-primary bg-light-primary px-3 py-2.5 outline-none transition focus:border-dark-primary-accent"
+                className="placeholder:text-sm max-xl:placeholder:text-[13px] w-full mt-1 rounded-lg border dark:border-dark-border-primary/50 dark:bg-dark-bg-primary/70 bg-light-bg-primary border-light-border-primary bg-light-primary px-3 py-2.5 outline-none transition focus:border-dark-primary-accent"
               />
             </div>
           ) : (
@@ -77,8 +102,8 @@ function EditProfile({ onClose }) {
                 onInput={(event) => onChangeHandler(event, item.state)}
                 value={item.value}
                 maxLength={150}
-                placeholder="Write something about yourself..."
-                className="w-full mt-1 resize-none rounded-lg border dark:bg-dark-bg-primary/70 dark:border-dark-border-primary/50 bg-light-bg-primary border-light-border-primary border-dark-border-primary bg-dark-bg-primary px-3 py-2.5 outline-none transition focus:border-dark-primary-accent"
+                placeholder={item.placeholder}
+                className="placeholder:text-sm max-xl:placeholder:text-[13px] w-full mt-1 resize-none rounded-lg border dark:bg-dark-bg-primary/70 dark:border-dark-border-primary/50 bg-light-bg-primary border-light-border-primary border-dark-border-primary bg-dark-bg-primary px-3 py-2.5 outline-none transition focus:border-dark-primary-accent"
               />
             </div>
           );

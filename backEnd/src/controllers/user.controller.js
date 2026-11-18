@@ -115,7 +115,7 @@ const sendCodeHandler = async (req, res) => {
   const { email } = req.body;
   if (emailRegex.test(email)) {
     try {
-      const code = crypto.randomInt(100000 , 1000000);
+      const code = crypto.randomInt(100000, 1000000);
       const hashedCode = await bcrypt.hash(String(code), hashRounds);
       const htmlElements = `<!DOCTYPE html>
           <html lang="en">

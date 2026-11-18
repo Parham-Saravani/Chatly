@@ -23,7 +23,7 @@ function AuthLayout({
           {!card && (
             <img
               className="mb-5 size-38 object-contain"
-              src={theme === "light" ? lightIcon : darkIcon}
+              src={theme === "dark" ? darkIcon : lightIcon}
               alt="Chatly logo"
             />
           )}
