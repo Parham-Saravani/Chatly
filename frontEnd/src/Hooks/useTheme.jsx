@@ -14,15 +14,10 @@ function useTheme() {
   const changeTheme = () => {
     const finalTheme = theme === "light" ? "dark" : "light";
     storeChangeTheme(finalTheme);
-    localStorage.setItem("theme", finalTheme);
     changeHTMLClassList(finalTheme);
   };
-  const syncTheme = () => {
-    const localTheme = localStorage.getItem("theme") || "light";
-    storeChangeTheme(localTheme);
-    changeHTMLClassList(localTheme);
-  };
-  return { syncTheme, changeTheme };
+
+  return { changeTheme };
 }
 
 export default useTheme;

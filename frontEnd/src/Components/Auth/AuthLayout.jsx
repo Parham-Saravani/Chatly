@@ -11,7 +11,7 @@ function AuthLayout({
   setStep,
 }) {
   const { theme } = useTheme((state) => state.theme);
-
+  console.log(theme);
   return (
     <div
       className={`fixed  inset-0 flex min-h-screen items-center justify-center ${theme === "dark" ? "dark-custom-bg" : "light-custom-bg"} px-4 py-8`}

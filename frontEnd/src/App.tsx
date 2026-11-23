@@ -1,13 +1,10 @@
 import { RouterProvider } from "react-router";
-import router from "./routes";
-import useTheme from "./Hooks/useTheme";
+import router from "./routes.jsx";
+import useTheme from "./Hooks/useTheme.jsx";
 import { useEffect } from "react";
 
 function App() {
-  const { syncTheme } = useTheme();
-  useEffect(() => {
-    syncTheme();
-  }, []);
+ 
   return <RouterProvider router={router} />;
 }
 

@@ -108,7 +108,7 @@ function Menu({ isMenuOpen, setIsMenuOpen }) {
           )}
 
           {/* menu items */}
-          <ul className="space-y-1">
+          {/* <ul className="space-y-1">
             {menuItems.map(({ label, description, icon: Icon }) => (
               <li key={label}>
                 <button
@@ -148,7 +148,7 @@ function Menu({ isMenuOpen, setIsMenuOpen }) {
                 </button>
               </li>
             ))}
-          </ul>
+          </ul> */}
 
           {/* theme switch */}
           <div>
