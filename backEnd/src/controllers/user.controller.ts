@@ -4,13 +4,14 @@ import bcrypt from "bcrypt";
 import User from "../models/user.model.js";
 import crypto from "crypto";
 import { decompressToken, generateToken } from "../utilities/token.js";
+import type { Request, Response } from "express";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const userNameRegex = /^[a-zA-Z0-9-]+$/;
 
 const hashRounds = 10;
 
-const registerNewUser = async (req, res) => {
+const registerNewUser = async (req: Request, res: Response) => {
   const { email, username, name, imageUrl, bio } = req.body;
   try {
     if (
@@ -37,7 +38,7 @@ const registerNewUser = async (req, res) => {
         ...(imageUrl && { imageUrl }),
         ...(bio && { bio }),
       });
-      const token = generateToken(userData._id);
+      const token = generateToken(userData._id.toString());
       res.status(201).json({
         message: "Your account has been created successfully.",
         token,
@@ -53,7 +54,7 @@ const registerNewUser = async (req, res) => {
     res.json({ message: "Something went wrong. Please try again later." });
   }
 };
-const updateUserData = async (req, res) => {
+const updateUserData = async (req: Request, res: Response) => {
   const { previousEmail, newEmail, username, name, imageUrl, bio } = req.body;
   try {
     if (
@@ -81,7 +82,7 @@ const updateUserData = async (req, res) => {
     res.json({ message: "Something went wrong. Please try again later." });
   }
 };
-const takeUserData = async (req, res) => {
+const takeUserData = async (req: Request, res: Response) => {
   const { token } = req.body;
   if (token) {
     try {
@@ -111,7 +112,7 @@ const takeUserData = async (req, res) => {
     res.status(400).json({ message: "INVALID_DATA" });
   }
 };
-const sendCodeHandler = async (req, res) => {
+const sendCodeHandler = async (req: Request, res: Response) => {
   const { email } = req.body;
   if (emailRegex.test(email)) {
     try {
@@ -160,7 +161,7 @@ const sendCodeHandler = async (req, res) => {
                         </div>
 
                         <p style="margin:0 0 24px; font-size:13px; line-height:1.7; color:#64748b;">
-                          This code expires in <strong style="color:#0f172a;">1 minutes</strong>.
+                          This code expires in <strong style="color:#0f172a;">2 minutes</strong>.
                         </p>
 
                         <div style="height:1px; background-color:#e2e8f0; margin-bottom:20px;"></div>
@@ -232,14 +233,14 @@ const sendCodeHandler = async (req, res) => {
   }
 };
 
-const codeVerifierHandler = async (req, res) => {
+const codeVerifierHandler = async (req: Request, res: Response) => {
   const { code, email } = req.body;
   try {
     if (emailRegex.test(email)) {
       if (/^\d{6}$/.test(String(code))) {
         const currentEmailOTP = await EmailOTP.findOne({ email });
         if (currentEmailOTP) {
-          if (currentEmailOTP.expiresAt > Date.now()) {
+          if (currentEmailOTP.expiresAt.getTime() > Date.now()) {
             const isCodeSame = await bcrypt.compare(
               String(code),
               currentEmailOTP.hashedCode,
@@ -252,7 +253,7 @@ const codeVerifierHandler = async (req, res) => {
                 { createdAt: false },
               );
               if (userData) {
-                const token = generateToken(userData._id);
+                const token = generateToken(userData._id.toString());
                 return res.json({
                   message: "VERIFIED",
                   userStatus: "registerd",
@@ -281,7 +282,7 @@ const codeVerifierHandler = async (req, res) => {
   }
 };
 
-const checkIsUserIDAvailable = async (req, res) => {
+const checkIsUserIDAvailable = async (req: Request, res: Response) => {
   const { id } = req.body;
   try {
     if (id) {

@@ -1,6 +1,10 @@
 import nodemailer from "nodemailer";
-
-const sendEmail = async ({ to, subject, html }) => {
+type emailData = {
+  to: string;
+  subject: string;
+  html: string;
+};
+const sendEmail = async ({ to, subject, html }: emailData) => {
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,

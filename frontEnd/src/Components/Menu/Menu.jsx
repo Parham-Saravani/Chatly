@@ -1,7 +1,5 @@
 import { useState } from "react";
-import lightLogo from "/Images/light-logo-no-text.png";
 import darkLogo from "/Images/dark-logo-no-text.png";
-import { IoClose } from "react-icons/io5";
 import { FiUser, FiMonitor, FiMoon, FiChevronRight } from "react-icons/fi";
 import Modal from "../Modal/Modal";
 import EditProfile from "../Modal/elements/EditProfile";

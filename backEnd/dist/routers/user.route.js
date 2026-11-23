@@ -1,0 +1,11 @@
+import Router from "express";
+import { sendCodeHandler, codeVerifierHandler, checkIsUserIDAvailable, registerNewUser, updateUserData, takeUserData, } from "../controllers/user.controller.js";
+const router = Router();
+router.post("/", registerNewUser);
+router.put("/", updateUserData);
+router.post("/me", takeUserData);
+router.post("/send-code", sendCodeHandler);
+router.post("/verify-code", codeVerifierHandler);
+router.post("/check-id", checkIsUserIDAvailable);
+export default router;
+//# sourceMappingURL=user.route.js.map

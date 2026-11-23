@@ -44,7 +44,7 @@ function EditProfile({ onClose }) {
           <img
             src={imagePreview}
             alt="Profile"
-            className="object-cover rounded-full"
+            className="object-cover rounded-full w-full h-full"
           />
         ) : (
           <div className="dark:bg-dark-primary-accent flex justify-center items-center text-5xl rounded-full w-full h-full">

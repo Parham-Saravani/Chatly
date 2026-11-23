@@ -35,6 +35,7 @@ function OTPLayout({ email, setStep, setEmail }) {
   const [timer, setTimer] = useState(0);
   const [resetInputs, setResetInputs] = useState(false);
   const [isRunning, setIsRunning] = useState(false);
+  const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     if (!isRunning) return;
@@ -113,20 +114,23 @@ function OTPLayout({ email, setStep, setEmail }) {
           </AuthBtutton>
 
           {timer === 0 ? (
-            <span
+            <button
+              disabled={isSending}
               onClick={async () => {
+                setIsSending(true);
                 const responst = await requestEmail(email);
                 if (responst.message === "EMAIL_SENT") {
-                  setTimer(60);
+                  setTimer(120);
                   setIsRunning(true);
+                  setIsSending(false);
                   return;
                 }
                 toast.error(otpMessages[responst.message]);
               }}
-              className="text-center block text-sm mt-7 dark:text-dark-primary-accent text-light-primary-accent transition-colors duration-300 dark:hover:text-dark-primary-accent/80 hover:text-light-primary-accent/80 cursor-pointer"
+              className="w-full disabled:cursor-default dark:disabled:text-dark-primary-accent/80 disabled:text-light-primary-accent/80 text-center block text-sm mt-7 dark:text-dark-primary-accent text-light-primary-accent transition-colors duration-300 dark:hover:text-dark-primary-accent/80 hover:text-light-primary-accent/80 cursor-pointer"
             >
-              Resend code
-            </span>
+              {isSending ? "Sending..." : "Resend code"}
+            </button>
           ) : (
             <p className="mt-7 text-center text-sm dark:text-dark-text-mute text-dark-text-mute">
               You can request a new code in{" "}

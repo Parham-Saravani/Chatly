@@ -11,7 +11,11 @@ import UserModalContent from "../Components/Modal/elements/UserModalContent";
 
 const memberFormatter = (members) => {
   const divided = members / 10;
-  if (!divided) {
+  if (divided > 0 && divided < 1000) {
+    return `${members.toString()[0]}.${members.toString()[1]}K subscribers`;
+  } else if (divided > 10_000 && divided < 100_000) {
+    return `${members.toString().slice(0, 3)}${+String(members)[4] ? `.${ String(members)[4]}` : ''}K subscribers`;
+  } else {
     return `${members.toString()[0]}.${members.toString()[1]} subscribers`;
   }
 };
